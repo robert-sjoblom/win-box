@@ -11,7 +11,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
 
 
 const appRoutes: Routes = [
-  { path: '',         component: WelcomeComponent },
+  { path: '',         component: WelcomeComponent, pathMatch: 'full' },
+  { path: 'main',     component: MainViewComponent},
   { path: 'login',    component: LoginComponent },
   { path: 'success',  component: SuccessComponent},
   { path: '**',       component: PageNotFoundComponent}

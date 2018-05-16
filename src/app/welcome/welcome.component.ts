@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'welcome',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor() { }
+  loggedIn;
+
+  constructor(private router: Router) { }
 
   ngOnInit() {
+    this.loggedIn = false;
+    console.log(this.loggedIn);
+
+    if (this.loggedIn) {
+      console.log('logged in is true');
+      this.router.navigate(['/main']);
+    } else {
+      console.log('logged in is false');
+      this.router.navigate(['/login']);
+    }
+
   }
 
 }
