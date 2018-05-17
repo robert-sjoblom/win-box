@@ -5,7 +5,7 @@ import { Dropbox } from 'dropbox/src';
 @Injectable({
   providedIn: 'root'
 })
-export class DropboxLoginService {
+export class DropboxService {
 
   appKey = 'mkbet5s6hmzjcte';
   redirect = 'http://localhost:4200/success';

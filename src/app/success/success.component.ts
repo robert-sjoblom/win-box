@@ -16,8 +16,8 @@ export class SuccessComponent implements OnInit {
 
   ngOnInit() {
     const url = window.location.href;
-    this.state.setAccessTokenFromUrl(url)
-      .then(val => console.log('shit yeah'))
+    this.state.setUserDetailsFromUrl(url)
+      .then(val => console.log('shit yeah')) // redirect to main-view
       .catch(/* something went shit */);
 
   }

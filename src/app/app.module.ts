@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { DropboxService } from './dropbox.service';
 import { LoginComponent } from './login/login.component';
 import { MainViewComponent } from './main-view/main-view.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -32,7 +33,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true })
   ],
-  providers: [],
+  providers: [DropboxService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

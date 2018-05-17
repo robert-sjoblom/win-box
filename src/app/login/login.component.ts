@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DropboxLoginService } from '../dropbox-login.service';
+import { StateService } from '../state.service';
 
 
 
@@ -10,12 +10,10 @@ import { DropboxLoginService } from '../dropbox-login.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private dropbox: DropboxLoginService) { }
+  loginUrl;
+  constructor(private stateService: StateService) { }
 
   ngOnInit() {
+    this.loginUrl = this.stateService.login();
   }
-
-  login() {
-  }
-
 }
