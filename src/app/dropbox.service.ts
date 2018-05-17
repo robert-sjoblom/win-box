@@ -18,4 +18,8 @@ export class DropboxService {
   url() {
     return this.authUrl;
   }
+
+  setAccessToken(token: string) {
+    this.dropboxClient.setAccessToken(token);
+  }
 }
