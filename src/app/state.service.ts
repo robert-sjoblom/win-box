@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DropboxService } from './dropbox.service';
+import { IUserDetails } from './interfaces/IUserDetails';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class StateService {
 
   // state knows stuff
   // like, access tokens
-  userDetails;
+  userDetails: IUserDetails;
   location;
   starredFiles;
   // updateSubscribers uppdaterar och skriver till local storage;
@@ -34,12 +35,23 @@ export class StateService {
         };
       }, {});
 
+    this.updateDropboxClient(this.userDetails.access_token);
+
     return Promise.resolve(true);
   }
 
   updateSubscribers(): void {
 
   }
+
+  updateDropboxClient(token) {
+    this.dropboxService.setAccessToken(token);
+  }
+
+  getToken(): string {
+    return this.userDetails.access_token;
+  }
+
 
   login(): string {
     return this.dropboxService.authUrl;
