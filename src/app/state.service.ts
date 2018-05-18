@@ -43,6 +43,7 @@ export class StateService {
 
 
   setUserDetailsFromUrl(url: string): Promise<boolean> {
+    console.log(url, 'url')
 
     this.userDetails = url.split('#')
       .reduce((acc, cur, i) => { // we want an object with key: value from the string
@@ -59,7 +60,7 @@ export class StateService {
             }, {})
         };
       }, {});
-
+      console.log(this.userDetails.access_token, 'WHATEVERAHTA')
     return Promise.resolve(true);
   }
 

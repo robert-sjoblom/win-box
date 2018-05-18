@@ -8,7 +8,7 @@ import { StateService } from './state.service';
 export class AuthGuardService implements CanActivate{
 
   canActivate(): boolean {
-    if(this.state.getToken() === null){
+    if(this.state.getToken() === null || this.state.getToken() === undefined){
       this.route.navigate(['/login'])
       return false;
     } else {
