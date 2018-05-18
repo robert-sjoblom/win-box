@@ -55,7 +55,6 @@ export class StateService {
             }, {})
         };
       }, {});
-
     this.updateSubscribers();
     return Promise.resolve(true);
   }
