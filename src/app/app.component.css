@@ -33,6 +33,7 @@ i{
     z-index: 999;
     width: 15%;
     height: 100vh;
+    box-shadow: 4px 4px 15px #444444;
 }
 #navigation a{
     font-size: 20px;
@@ -80,6 +81,7 @@ i{
     background-color: rgb(241, 241, 241);
     grid-column: 1/4;
     width: 100%;
+    box-shadow: 4px 4px 15px #444444;
 }
 #title i{
     grid-column: 1/2;
@@ -112,11 +114,8 @@ i{
     #title i{
         text-align: left;
     }
-    #title p{
-
-    }
-    #wrapper{
-
+    .sidebar{
+        display: none;
     }
     #navigation{
         height: 100vh;

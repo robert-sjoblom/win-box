@@ -11,7 +11,8 @@
     id="name"
     (click)="changePath($event)"
     >
-    {{file.name}}
+    <a [routerLink]="file.path_lower">{{file.name}}</a>
+
   </div>
   <div id="size">
     {{file.size | size}}

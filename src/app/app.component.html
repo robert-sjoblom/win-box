@@ -9,10 +9,11 @@
     <p>#WIN_BOX</p>
   </header>
 
-  <nav
+  <nav 
     *ngIf="toggleMenu"
     id="navigation">
-    <i
+    <i 
+
       (click)="toggleMenu = !toggleMenu"
       class="fas fa-times"></i>
     <p>#Files</p>
@@ -31,8 +32,6 @@
     </div>
 
   </nav>
-
-
 
   <section class="main">
     <div id="render-list">

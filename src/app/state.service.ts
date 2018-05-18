@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { DropboxService } from './dropbox.service';
 import { IUserDetails } from './interfaces/IUserDetails';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -75,4 +76,11 @@ export class StateService {
     return this.dropboxService.authUrl;
   }
 
+  changePath(path, tag){
+    if(tag === 'file'){
+      //this.download(tag, path)
+    } else{
+      this.location = path;
+    }
+  }
 }
