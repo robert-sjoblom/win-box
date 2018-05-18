@@ -1,4 +1,6 @@
-<div id="file-wrapper">
+<div 
+  id="file-wrapper"
+>
   <div id="icon">
     <div *ngIf="file['.tag'] == 'folder'">
       <i class="fas fa-folder-open"></i>
@@ -12,6 +14,7 @@
     (click)="changePath($event)"
     >
     <a [routerLink]="file.path_lower">{{file.name}}</a>
+    <i class="far fa-star"></i>
 
   </div>
   <div id="size">

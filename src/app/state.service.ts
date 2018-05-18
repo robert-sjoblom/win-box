@@ -25,7 +25,7 @@ export class StateService {
     } else {
       this.userDetails = {
         access_token: null
-      }
+      };
     }
     if (localStorage.getItem('starredItems') !== null) {
       this.starredItems = JSON.parse(localStorage.getItem('starredItems'));
@@ -55,7 +55,6 @@ export class StateService {
             }, {})
         };
       }, {});
-
     this.updateSubscribers();
     return Promise.resolve(true);
   }

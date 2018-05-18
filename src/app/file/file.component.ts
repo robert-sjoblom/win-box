@@ -9,6 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FileComponent implements OnInit {
 
+  hover;
+
   @Input() file;
 
   @Output() fileObject = new EventEmitter
@@ -21,5 +23,7 @@ export class FileComponent implements OnInit {
   changePath(file){
     this.fileObject.emit(this.file)
   }
-
+  enter(event){
+    this.hover = !this.hover
+  }
 }
