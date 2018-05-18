@@ -20,7 +20,7 @@ export class StateService {
   // if local storage exists, use that
   // if it doesn't, user needs to log in.
   constructor(private dropboxService: DropboxService) {
-    if (localStorage.getItem('userDetails') !== null ) {
+    if (localStorage.getItem('userDetails') !== null) {
       this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
     } else {
       this.userDetails = {
@@ -55,7 +55,7 @@ export class StateService {
             }, {})
         };
       }, {});
-    this.updateSubscribers();
+    this.saveStateToLocalStorage();
     return Promise.resolve(true);
   }
 
@@ -66,22 +66,21 @@ export class StateService {
 
   getCurrentLocationContent(location: string) {
     this.dropboxService.getCurrentLocationContent('');
-
     // this.currentLocationContent = this.dropboxService.getCurrentLocationContent(location);
   }
 
-  getToken(): string{
-    return this.userDetails.access_token
+  getToken(): string {
+    return this.userDetails.access_token;
   }
 
   getAuthUrl(): string {
     return this.dropboxService.authUrl;
   }
 
-  changePath(path, tag){
-    if(tag === 'file'){
-      //this.download(tag, path)
-    } else{
+  changePath(path, tag) {
+    if (tag === 'file') {
+      // this.download(tag, path)
+    } else {
       // this.currentLocation = path;
     }
   }
