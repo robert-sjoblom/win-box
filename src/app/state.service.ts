@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DropboxService } from './dropbox.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -50,7 +51,6 @@ export class StateService {
       //this.download(tag, path)
     } else{
       this.location = path;
-
     }
   }
 }

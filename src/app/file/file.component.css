@@ -45,3 +45,27 @@
     text-align: right;
     grid-column: 4/5;
 }
+@media (max-width: 550px){
+    #file-wrapper{
+        display: block;
+        width: 150px;
+        height: 150px;
+        border-bottom: none;
+    }
+    .fa-folder-open, .fa-file-alt{
+        font-size: 80px;
+    } 
+    #icon{
+        text-align: center;
+    }
+    #name{
+        font-size: 15px;
+        text-align: center;
+    }
+    #size{
+        display: none;
+    }
+    #time-stamp{
+        display: none;
+    }
+}
