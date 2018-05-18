@@ -13,13 +13,15 @@ import { SuccessComponent } from './success/success.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { FileListComponent } from './file-list/file-list.component';
 import { FileComponent } from './file/file.component';
-import { SizePipe } from './size.pipe'
+import { SizePipe } from './size.pipe' 
+import { AuthGuardService as AuthGuard} from './auth-guard.service';
+
 
 
 
 const appRoutes: Routes = [
   { path: '',         component: WelcomeComponent, pathMatch: 'full' },
-  { path: 'main',     component: MainViewComponent},
+  { path: 'main',     component: MainViewComponent, canActivate: [AuthGuard]},
   { path: 'login',    component: LoginComponent },
   { path: 'success',  component: SuccessComponent},
   { path: '**',       component: PageNotFoundComponent}

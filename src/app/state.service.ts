@@ -23,6 +23,10 @@ export class StateService {
   constructor(private dropboxService: DropboxService) {
     if (localStorage.getItem('userDetails') !== null ) {
       this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    } else {
+      this.userDetails = {
+        access_token: null
+      }
     }
     if (localStorage.getItem('starredItems') !== null) {
       this.starredItems = JSON.parse(localStorage.getItem('starredItems'));
@@ -39,6 +43,7 @@ export class StateService {
 
 
   setUserDetailsFromUrl(url: string): Promise<boolean> {
+
     this.userDetails = url.split('#')
       .reduce((acc, cur, i) => { // we want an object with key: value from the string
         if (!i) {
@@ -68,8 +73,8 @@ export class StateService {
     // this.currentLocationContent = this.dropboxService.getCurrentLocationContent(location);
   }
 
-  getToken(): string {
-    return this.userDetails.access_token;
+  getToken(): string{
+    return this.userDetails.access_token
   }
 
   getAuthUrl(): string {
@@ -80,7 +85,7 @@ export class StateService {
     if(tag === 'file'){
       //this.download(tag, path)
     } else{
-      this.location = path;
+      // this.currentLocation = path;
     }
   }
 }
