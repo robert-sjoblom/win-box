@@ -18,12 +18,11 @@ export class SuccessComponent implements OnInit {
     const url = window.location.href;
     this.state.setUserDetailsFromUrl(url)
       .then(() => {
-        // we logged in, redirect to main
+        // we authorized, redirect to main
         this.router.navigate(['/main']);
     })
       .catch(/* something went shit */);
   }
-
 }
 
 

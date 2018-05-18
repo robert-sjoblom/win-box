@@ -19,6 +19,7 @@ export class StateService {
 
 
   setUserDetailsFromUrl(url: string): Promise<boolean> {
+
     this.userDetails = url.split('#')
       .reduce((acc, cur, i) => { // we want an object with key: value from the string
         if (!i) {
@@ -35,8 +36,6 @@ export class StateService {
         };
       }, {});
 
-    this.updateDropboxClient(this.userDetails.access_token);
-
     return Promise.resolve(true);
   }
 
@@ -44,16 +43,12 @@ export class StateService {
 
   }
 
-  updateDropboxClient(token) {
-    this.dropboxService.setAccessToken(token);
-  }
-
   getToken(): string {
     return this.userDetails.access_token;
   }
 
 
-  login(): string {
+  getAuthUrl(): string {
     return this.dropboxService.authUrl;
   }
 

@@ -14,6 +14,6 @@ export class LoginComponent implements OnInit {
   constructor(private stateService: StateService) { }
 
   ngOnInit() {
-    this.loginUrl = this.stateService.login();
+    this.loginUrl = this.stateService.getAuthUrl();
   }
 }
