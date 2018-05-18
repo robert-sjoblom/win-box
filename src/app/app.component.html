@@ -8,11 +8,11 @@
       ></i>
     <p>#WIN_BOX</p>
   </header>
-  
-  <nav 
+
+  <nav
     *ngIf="toggleMenu"
     id="navigation">
-    <i 
+    <i
       (click)="toggleMenu = !toggleMenu"
       class="fas fa-times"></i>
     <p>#Files</p>
@@ -37,7 +37,6 @@
   <section class="main">
     <div id="render-list">
       <router-outlet></router-outlet>
-      <file-list></file-list>
     </div>
   </section>
   <div class="sidebar">

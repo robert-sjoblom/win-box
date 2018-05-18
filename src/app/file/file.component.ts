@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'file',
@@ -14,8 +14,8 @@ export class FileComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.file)
-    console.log(this.file[".tag"] === 'folder')
+    // console.log(this.file)
+    // console.log(this.file[".tag"] === 'folder')
   }
 
   changePath(file){

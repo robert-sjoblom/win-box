@@ -13,7 +13,7 @@ export class WelcomeComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.loggedIn = false;
+    this.loggedIn = true;
     console.log(this.loggedIn);
 
     if (this.loggedIn) {
