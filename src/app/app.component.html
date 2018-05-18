@@ -1,9 +1,44 @@
 
 <div id="wrapper">
-  <nav>MENU ITEMS</nav>
-  <header>TITLE & SEARCH BAR</header>
+  <header id="title">
+      <i
+      *ngIf="!toggleMenu"
+      class="fas fa-bars"
+      (click)="toggleMenu = !toggleMenu"
+      ></i>
+    <p>#WIN_BOX</p>
+  </header>
+  
+  <nav 
+    *ngIf="toggleMenu"
+    id="navigation">
+    <i 
+      (click)="toggleMenu = !toggleMenu"
+      class="fas fa-times"></i>
+    <p>#Files</p>
+    <ul>
+      <li>#My Files</li>
+      <li>#Sharing</li>
+      <li>#File Requests</li>
+      <li>#Deleted Files</li>
+    </ul>
+    <div id="nav-bottom">
+        <div id="nav-button"><a href="">#Log_Out</a></div>
+        <div id="nav-info">
+            <div>Info</div>
+            <div>Contact</div>
+        </div>
+    </div>
+
+  </nav>
+
+
+
   <section class="main">
-    <router-outlet></router-outlet>
+    <div id="render-list">
+      <router-outlet></router-outlet>
+      <file-list></file-list>
+    </div>
   </section>
   <div class="sidebar">
     SHIT TO THE RIGHT.

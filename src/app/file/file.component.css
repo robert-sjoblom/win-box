@@ -1,0 +1,47 @@
+#file-wrapper{
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 6% 48% 15% 30%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #c4c3c3
+}
+.fa-file-alt{
+    font-size: 30px;
+    padding-bottom: 5px;
+    color: rgb(52, 128, 204);
+}
+.fa-folder-open{
+    font-size: 30px;
+    color: rgb(52, 128, 204);
+    padding-bottom: 5px;
+}
+#name, #size, #time-stamp{
+    font-size: 19px;
+    font-weight: 20px;
+}
+#icon{
+    grid-column: 1/2;
+    width: 100%;
+    text-align: left;
+}
+
+#name{
+    width: 100%;
+    text-align: left;
+    grid-column: 2/3;
+    cursor: pointer;
+}
+#name:hover{
+    text-decoration: underline;
+}
+#size{
+    width: 100%;
+    text-align: left;
+    grid-column: 3/4
+}
+#time-stamp{
+    width: 100%;
+    text-align: right;
+    grid-column: 4/5;
+}
