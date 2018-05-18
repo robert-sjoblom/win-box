@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+
 @Component({
   selector: 'file',
   templateUrl: './file.component.html',
@@ -15,8 +16,6 @@ export class FileComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    console.log(this.file)
-    console.log(this.file[".tag"] === 'folder')
   }
 
   changePath(file){

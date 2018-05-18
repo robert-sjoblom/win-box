@@ -8,8 +8,6 @@ import { StateService } from '../state.service';
 })
 export class FileListComponent implements OnInit {
 
-  
-
     files = [
     {
       ".tag": "folder",
@@ -82,14 +80,13 @@ export class FileListComponent implements OnInit {
     }
   ]
 
-
   constructor(private stateService: StateService) { }
 
   ngOnInit() {
-  }
-  
-  changePath(event){
-    this.stateService.changePath(event.path_lower, event['.tag'])
+    this.stateService.getCurrentLocationContent('');
   }
 
+  // changePath(event) {
+  //   this.stateService.changePath(event.path_lower, event['.tag']);
+  // }
 }
