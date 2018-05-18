@@ -45,4 +45,12 @@ export class StateService {
     return this.dropboxService.authUrl;
   }
 
+  changePath(path, tag){
+    if(tag === 'file'){
+      //this.download(tag, path)
+    } else{
+      this.location = path;
+
+    }
+  }
 }

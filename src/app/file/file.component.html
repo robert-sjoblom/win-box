@@ -1,0 +1,22 @@
+<div id="file-wrapper">
+  <div id="icon">
+    <div *ngIf="file['.tag'] == 'folder'">
+      <i class="fas fa-folder-open"></i>
+    </div>
+    <div *ngIf="file['.tag'] == 'file'">
+        <i class="far fa-file-alt"></i>
+    </div>
+  </div>
+  <div 
+    id="name"
+    (click)="changePath($event)"
+    >
+    {{file.name}}
+  </div>
+  <div id="size">
+    {{file.size | size}}
+  </div>
+  <div id="time-stamp">
+    {{file.client_modified | date:'fullDate':''}}
+  </div>
+</div>

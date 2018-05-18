@@ -9,6 +9,10 @@ import { MainViewComponent } from './main-view/main-view.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SuccessComponent } from './success/success.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { FileListComponent } from './file-list/file-list.component';
+import { FileComponent } from './file/file.component';
+import { SizePipe } from './size.pipe'
+
 
 
 const appRoutes: Routes = [
@@ -26,7 +30,10 @@ const appRoutes: Routes = [
     WelcomeComponent,
     SuccessComponent,
     MainViewComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    FileListComponent,
+    FileComponent,
+    SizePipe
   ],
   imports: [
     BrowserModule,

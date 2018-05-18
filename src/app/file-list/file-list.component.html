@@ -1,0 +1,18 @@
+<div id="breadcrumbs">
+  
+</div>
+<div id="titles">
+    <div id="title-icon"></div>
+    <div id="title-name">Name</div>
+    <div id="title-size">Size</div>
+    <div id="title-time">Last Modified</div>
+</div>
+
+
+<div id="wrapper-list">
+  <file
+    *ngFor="let file of files"
+    [file]="file" 
+    (fileObject)="changePath($event)"
+  ></file>
+</div>
