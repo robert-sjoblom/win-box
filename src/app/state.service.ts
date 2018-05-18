@@ -19,6 +19,7 @@ export class StateService {
 
 
   setUserDetailsFromUrl(url: string): Promise<boolean> {
+
     this.userDetails = url.split('#')
       .reduce((acc, cur, i) => { // we want an object with key: value from the string
         if (!i) {
