@@ -11,8 +11,7 @@ export class StateService {
   // state knows stuff
   // like, access tokens
   userDetails: IUserDetails;
-  // userDetails = { access_token: 'xWwpv_lOfTsAAAAAAAAdqozWJ1EOEu4OtqpRjaw1MhkQQhXTVhgH4N3yhHkm0sfR' };
-  currentLocation: string; // this is where we are. '' for root, 'java' for folder java
+  currentLocation: string[]; // this is where we are. '' for root, 'java' for folder java
   // currentLocationContent = new BehaviorSubject<IFIleDetails[]>(); // an array with IFileDetail objects
   starredItems = false;
 
@@ -40,10 +39,7 @@ export class StateService {
     localStorage.setItem('starredItems', JSON.stringify(this.starredItems));
   }
 
-
-
   setUserDetailsFromUrl(url: string): Promise<boolean> {
-
     this.userDetails = url.split('#')
       .reduce((acc, cur, i) => { // we want an object with key: value from the string
         if (!i) {
@@ -60,11 +56,13 @@ export class StateService {
         };
       }, {});
 
+    this.updateSubscribers();
     return Promise.resolve(true);
   }
 
   updateSubscribers(): void {
-    // curentLocationContent
+    // currentLocationContent
+    this.saveStateToLocalStorage();
   }
 
   getCurrentLocationContent(location: string) {
