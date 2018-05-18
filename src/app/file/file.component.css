@@ -32,6 +32,14 @@
     grid-column: 2/3;
     cursor: pointer;
 }
+.show{
+    transition: 0.5s;
+    display: block;
+}
+.hide{
+    transition: 0.5s;
+    display: none;
+}
 #name:hover{
     text-decoration: underline;
 }
@@ -44,6 +52,9 @@
     width: 100%;
     text-align: right;
     grid-column: 4/5;
+}
+.fa-star{
+
 }
 @media (max-width: 550px){
     #file-wrapper{
