@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DropboxService } from './dropbox.service';
+import { IUserDetails } from './interfaces/IUserDetails';
 
 
 @Injectable({
@@ -9,13 +10,36 @@ export class StateService {
 
   // state knows stuff
   // like, access tokens
-  userDetails;
-  location;
-  starredFiles;
+  userDetails: IUserDetails;
+  // userDetails = { access_token: 'xWwpv_lOfTsAAAAAAAAdqozWJ1EOEu4OtqpRjaw1MhkQQhXTVhgH4N3yhHkm0sfR' };
+  currentLocation: string; // this is where we are. '' for root, 'java' for folder java
+  // currentLocationContent = new BehaviorSubject<IFIleDetails[]>(); // an array with IFileDetail objects
+  starredItems = false;
+
   // updateSubscribers uppdaterar och skriver till local storage;
 
+  // if local storage exists, use that
+  // if it doesn't, user needs to log in.
+  constructor(private dropboxService: DropboxService) {
+    if (localStorage.getItem('userDetails') !== null ) {
+      this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    } else {
+      this.userDetails = {
+        access_token: null
+      }
+    }
+    if (localStorage.getItem('starredItems') !== null) {
+      this.starredItems = JSON.parse(localStorage.getItem('starredItems'));
+    }
+  }
 
-  constructor(private dropboxService: DropboxService) { }
+  saveStateToLocalStorage() {
+    // userDetails
+    // starredItems
+    localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
+    localStorage.setItem('starredItems', JSON.stringify(this.starredItems));
+  }
+
 
 
   setUserDetailsFromUrl(url: string): Promise<boolean> {
@@ -40,10 +64,20 @@ export class StateService {
   }
 
   updateSubscribers(): void {
-
+    // curentLocationContent
   }
 
-  login(): string {
+  getCurrentLocationContent(location: string) {
+    this.dropboxService.getCurrentLocationContent('');
+
+    // this.currentLocationContent = this.dropboxService.getCurrentLocationContent(location);
+  }
+
+  getToken(): string{
+    return this.userDetails.access_token
+  }
+
+  getAuthUrl(): string {
     return this.dropboxService.authUrl;
   }
 
@@ -51,7 +85,7 @@ export class StateService {
     if(tag === 'file'){
       //this.download(tag, path)
     } else{
-      this.location = path;
+      // this.currentLocation = path;
     }
   }
 }

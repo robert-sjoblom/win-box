@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from '../state.service';
+import { AuthGuardService } from '../auth-guard.service';
 
 @Component({
   selector: 'main-view',
@@ -10,10 +11,10 @@ export class MainViewComponent implements OnInit {
 
   
 
-  constructor(private state: StateService) { }
+  constructor(private state: StateService, private authGuard: AuthGuardService) { }
 
   ngOnInit() {
-    
+
   }
 
 }
