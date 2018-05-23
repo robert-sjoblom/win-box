@@ -54,8 +54,18 @@
     grid-column: 4/5;
 }
 .fa-star{
-
+    margin-left: 30px;
+    font-size: 25px;
+    color: rgb(52, 128, 204);   
 }
+
+.fa-star:hover{
+    font-weight: bold;
+}
+.bold{
+    font-weight: bold;
+}
+
 @media (max-width: 550px){
     #file-wrapper{
         display: block;
@@ -77,6 +87,9 @@
         display: none;
     }
     #time-stamp{
+        display: none;
+    }
+    .fa-star{
         display: none;
     }
 }
