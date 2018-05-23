@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { DropboxService } from './dropbox.service';
 import Manager from './statemanager';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,6 +27,15 @@ export class NewStateServiceService {
         break;
       case ActionType.ChangeLocation:
         new ChangeLocation().run(args);
+        break;
+
+      case ActionType.AddStar:
+        new AddStar().run(args);
+        break;
+
+      case ActionType.RemoveStar:
+        new RemoveStar().run(args);
+        break;
     }
   }
 
@@ -43,6 +53,19 @@ export class NewStateServiceService {
 
 interface Action {
   run(params?: any[]);
+}
+
+class RemoveStar implements Action {
+  run(file){
+    Manager.invokeStatehandler('RemoveStar', file)
+  }
+}
+
+class AddStar implements Action {
+
+  run(file){
+    Manager.invokeStatehandler('AddStar', file);
+  }
 }
 
 class GetFileListing implements Action {
@@ -67,6 +90,8 @@ class ChangeLocation implements Action {
 export enum ActionType {
   GetFileListing,
   ChangeLocation,
-  // AddStarRating,
+  AddStar,
+  RemoveStar,
+
   // RemoveStarRating
 }
