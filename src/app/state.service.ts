@@ -1,40 +1,40 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { DropboxService } from './dropbox.service';
 import { IUserDetails } from './interfaces/IUserDetails';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
 
-  // state knows stuff
-  // like, access tokens
   userDetails: IUserDetails;
   currentLocation: string[]; // this is where we are. '' for root, 'java' for folder java
-  // currentLocationContent = new BehaviorSubject<IFIleDetails[]>(); // an array with IFileDetail objects
-  starredItems = false;
+  currentLocationContent; // an array with IFileDetail objects
+  starredItems = {};
 
-  // updateSubscribers uppdaterar och skriver till local storage;
+  private subject = new BehaviorSubject<any>(this.currentLocationContent);
 
-  // if local storage exists, use that
-  // if it doesn't, user needs to log in.
   constructor(private dropboxService: DropboxService) {
-    if (localStorage.getItem('userDetails') !== null) {
+
+
+    try {
       this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
-    } else {
+    } catch (error) {
       this.userDetails = {
         access_token: null
       };
     }
-    if (localStorage.getItem('starredItems') !== null) {
+    try {
       this.starredItems = JSON.parse(localStorage.getItem('starredItems'));
+    } catch (error) {
+      this.starredItems = {};
     }
+
+    this.currentLocation = [''];
   }
 
   saveStateToLocalStorage() {
-    // userDetails
-    // starredItems
     localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
     localStorage.setItem('starredItems', JSON.stringify(this.starredItems));
   }
@@ -62,11 +62,24 @@ export class StateService {
   updateSubscribers(): void {
     // currentLocationContent
     this.saveStateToLocalStorage();
+    this.subject.next(this.currentLocationContent);
   }
 
-  getCurrentLocationContent(location: string) {
-    this.dropboxService.getCurrentLocationContent('');
-    // this.currentLocationContent = this.dropboxService.getCurrentLocationContent(location);
+  getState() {
+    return this.subject.asObservable();
+    // stretch: .map(items => )
+  }
+  getFileList(location: string): void {
+    // hämta ny skit
+    // sätt currentLocationContent
+    // return this.subject.asObservable()
+
+
+    this.dropboxService.getFileList(location)
+      .subscribe(res => {
+        this.currentLocationContent = res.entries;
+        this.updateSubscribers();
+      });
   }
 
   getToken(): string {

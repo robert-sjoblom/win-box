@@ -1,0 +1,9 @@
+<p>
+  test-component works!
+</p>
+<h1>Current location: {{ location }}</h1>
+<h2>Fake location: {{ fakelocation }}</h2>
+<button (click)="handleClick()">Click me for list</button>
+<ul *ngIf="filelist?.length">
+  <li *ngFor="let file of filelist"><a (click)="changeLocation(file.path_lower)" >{{file.name}}</a></li>
+</ul>

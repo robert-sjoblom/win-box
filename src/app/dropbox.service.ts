@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Dropbox } from 'dropbox/src';
-
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -21,26 +21,23 @@ export class DropboxService {
     return this.authUrl;
   }
 
-  // deprecated, dropbox client uses promises. weak.
-  // setAccessToken(token: string) {
-  //   this.dropboxClient.setAccessToken(token);
-  // }
+  getFileList(location: string): Observable<any> {
+    const body = {};
 
-  getFileList(location: string) {
-    return null;
-  }
+    body['path'] = (location === 'root') ? '' : location;
+    console.log(body);
 
-  getCurrentLocationContent(location: string) {
-    return this.http.post(`${this.apiUrl}list_folder`, { path: location })
-      .subscribe(res => {
-        console.log(res);
-      });
+    // const loc = (location === 'root') ? '' : location;
+    // const prefix = (!loc) ? '' : '/';
+    return this.http.post(`${this.apiUrl}list_folder`, body);
   }
 
   // download(tag, path) {
   //   switch (tag) {
   //     case 'folder':
-  //       this.http.post(`${this.apiUrl}/download`)
+  //       download zip
+  //     case 'file':
+  //        download
   //   }
   // }
 
