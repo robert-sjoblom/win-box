@@ -22,19 +22,20 @@ export class NewStateServiceService {
   runAction(action: ActionType, args) {
     switch (action) {
       case ActionType.GetFileListing:
-
         new GetFileListing(this.dropbox).run(args);
         break;
       case ActionType.ChangeLocation:
         new ChangeLocation().run(args);
         break;
-
       case ActionType.AddStar:
         new AddStar().run(args);
         break;
-
       case ActionType.RemoveStar:
         new RemoveStar().run(args);
+        break;
+
+      case ActionType.AddUserDetails:
+        new AddUserDetails().run(args);
         break;
     }
   }
@@ -55,19 +56,6 @@ interface Action {
   run(params?: any[]);
 }
 
-class RemoveStar implements Action {
-  run(file){
-    Manager.invokeStatehandler('RemoveStar', file)
-  }
-}
-
-class AddStar implements Action {
-
-  run(file){
-    Manager.invokeStatehandler('AddStar', file);
-  }
-}
-
 class GetFileListing implements Action {
   constructor(private dropbox: DropboxService) { }
 
@@ -78,7 +66,11 @@ class GetFileListing implements Action {
       )
       .subscribe(res => {
         Manager.invokeStatehandler('FileList', location, res);
+      }, err => {
+        const msg = `Status: ${err.status}, ${err.statusText}`;
+        Manager.invokeStatehandler('ErrorMessage', msg);
       });
+
   }
 }
 
@@ -87,11 +79,28 @@ class ChangeLocation implements Action {
     Manager.invokeStatehandler('Location', location);
   }
 }
+
+class RemoveStar implements Action {
+  run(file) {
+    Manager.invokeStatehandler('RemoveStar', file);
+  }
+}
+
+class AddStar implements Action {
+  run(file) {
+    Manager.invokeStatehandler('AddStar', file);
+  }
+}
+
+class AddUserDetails implements Action {
+  run(userdetails) {
+    Manager.invokeStatehandler('AddUserDetails', userdetails);
+  }
+}
 export enum ActionType {
   GetFileListing,
   ChangeLocation,
   AddStar,
   RemoveStar,
-
-  // RemoveStarRating
+  AddUserDetails
 }

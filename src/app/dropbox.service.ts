@@ -21,24 +21,10 @@ export class DropboxService {
     return this.authUrl;
   }
 
+
   getFileList(location: string): Observable<any> {
     const body = {};
-
     body['path'] = (location === 'root') ? '' : location;
-    console.log(body);
-
-    // const loc = (location === 'root') ? '' : location;
-    // const prefix = (!loc) ? '' : '/';
     return this.http.post(`${this.apiUrl}list_folder`, body);
   }
-
-  // download(tag, path) {
-  //   switch (tag) {
-  //     case 'folder':
-  //       download zip
-  //     case 'file':
-  //        download
-  //   }
-  // }
-
 }
