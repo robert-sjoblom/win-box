@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { IUserDetails } from '../interfaces/IUserDetails';
 import { DropboxService } from './dropbox.service';
-import { IUserDetails } from './interfaces/IUserDetails';
 
 @Injectable({
   providedIn: 'root'

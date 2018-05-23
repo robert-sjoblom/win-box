@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionType, NewStateServiceService } from '../new-state-service.service';
+import { ActionType, NewStateServiceService } from '../services/new-state-service.service';
 
 
 @Component({

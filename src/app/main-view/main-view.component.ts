@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthGuardService } from '../auth-guard.service';
-import { StateService } from '../state.service';
+import { AuthGuardService } from '../services/auth-guard.service';
+import { StateService } from '../services/state.service';
 
 @Component({
   selector: 'main-view',

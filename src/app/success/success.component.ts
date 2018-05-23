@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StateService } from '../state.service';
+import { StateService } from '../services/state.service';
 
 @Component({
   selector: 'success',
