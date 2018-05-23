@@ -6,11 +6,15 @@ class Manager {
     userDetails: { access_token: '' },
     Location: 'root',
     FileList: {},
-    StarredItems: {},
+    starredItems: {},
   };
 
   constructor() {
+    try {
 
+    } catch (error) {
+
+    }
   }
 
 
@@ -33,10 +37,17 @@ class Manager {
     // check if property exists
     this.statehandlers[key](args);
     this.updater();
+    this.saveStateToStorage();
   }
 
   get state() {
     return this._state;
+  }
+
+  saveStateToStorage() {
+    const { userDetails, starredItems } = this._state;
+    console.log('yay', userDetails);
+
   }
 
   // hanterar att uppdatera state för alla subscribers

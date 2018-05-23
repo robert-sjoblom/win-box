@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionType, NewStateServiceService } from '../new-state-service.service';
+import Manager from '../statemanager';
 
 
 @Component({
@@ -23,6 +24,10 @@ export class TestComponentComponent implements OnInit {
       .subscribe(filelist => this.filelist = filelist[this.location]);
 
     this.state.runAction(ActionType.GetFileListing, this.location);
+  }
+
+  printLocalStorage() {
+    Manager.saveStateToStorage();
   }
 
   changeLocation(location) {
