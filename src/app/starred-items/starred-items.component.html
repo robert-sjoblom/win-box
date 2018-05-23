@@ -1,5 +1,20 @@
-<file
-  *ngFor="let star of starredItems"
-  [file]="star"
-  (fileObject)="changeStar($event)"
-></file>
+
+<h1 id="starred-title">#StarredItems</h1>
+
+<div id="titles">
+    <div id="title-icon"></div>
+    <div id="title-name">Name</div>
+    <div id="title-size">Size</div>
+    <div id="title-time">Last Modified</div>
+</div>
+
+<div id="wrapper-list">
+
+    <file
+    *ngFor="let star of starredItems"
+    [file]="star"
+    (fileObject)="changeStar($event)"
+  ></file>
+
+</div>
+
