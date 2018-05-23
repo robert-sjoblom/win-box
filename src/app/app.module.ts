@@ -12,11 +12,11 @@ import { LoginComponent } from './login/login.component';
 import { MainViewComponent } from './main-view/main-view.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SizePipe } from './size.pipe';
+import { StarredItemsComponent } from './starred-items/starred-items.component';
 import { StateService } from './state.service';
 import { SuccessComponent } from './success/success.component';
 import { TestComponentComponent } from './test-component/test-component.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { StarredItemsComponent } from './starred-items/starred-items.component';
 
 const appRoutes: Routes = [
   { path: '',         redirectTo: 'main', pathMatch: 'full' },
@@ -45,7 +45,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true }),
+    RouterModule.forRoot(appRoutes, { enableTracing: false }),
   ],
   providers: [DropboxService, StateService, {
     provide: HTTP_INTERCEPTORS,

@@ -25,10 +25,6 @@ export class DropboxService {
     const body = {};
 
     body['path'] = (location === 'root') ? '' : location;
-    console.log(body);
-
-    // const loc = (location === 'root') ? '' : location;
-    // const prefix = (!loc) ? '' : '/';
     return this.http.post(`${this.apiUrl}list_folder`, body);
   }
 

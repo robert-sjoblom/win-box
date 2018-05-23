@@ -1,7 +1,7 @@
 
 class Manager {
   private updater;
-
+// access_token: 'l4k0M7CsrbAAAAAAAAAAKskEC3SCsKi1ajezG4_8tbHWafx_TXyZLhEUXyCu0_MK'
   _state = {
     userDetails: { access_token: 'l4k0M7CsrbAAAAAAAAAAKskEC3SCsKi1ajezG4_8tbHWafx_TXyZLhEUXyCu0_MK' },
     Location: 'root',
@@ -60,7 +60,10 @@ class Manager {
 
   saveStateToStorage() {
     const { userDetails, starredItems } = this._state;
-    console.log('yay', userDetails);
+    const stateToSave = { userDetails, starredItems};
+    console.log('yooo', stateToSave);
+    localStorage.setItem('win-box', JSON.stringify(stateToSave));
+    console.log(JSON.parse(localStorage.getItem('win-box')));
 
   }
 
