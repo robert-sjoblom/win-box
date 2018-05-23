@@ -29,19 +29,14 @@ export class FileListComponent implements OnInit {
 
   }
   changeLocation(location) {
-    console.log(location)
     this.state.runAction(ActionType.ChangeLocation, location);
     this.state.runAction(ActionType.GetFileListing, this.location);
   }
   changeStar(file){
     if(this.starredItems.some(starred => starred.id === file.id)){
-      console.log('yey');
       this.state.runAction(ActionType.RemoveStar, file);
-      console.log(this.starredItems)
     } else {
-      console.log('nei')
       this.state.runAction(ActionType.AddStar, file);
-      console.log(this.starredItems)
     }
     
   }
