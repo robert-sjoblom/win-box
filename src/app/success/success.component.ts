@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActionType, NewStateServiceService } from '../new-state-service.service';
+import { ActionType, StateService } from '../services/state.service';
 
 @Component({
   selector: 'success',
@@ -12,7 +12,7 @@ export class SuccessComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private state: NewStateServiceService,
+    private state: StateService,
   ) { }
 
   ngOnInit() {

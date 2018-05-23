@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { NewStateServiceService } from './new-state-service.service';
+import { StateService } from './state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ import { NewStateServiceService } from './new-state-service.service';
 export class AuthGuardService implements CanActivate {
   userDetails;
 
-  constructor(private state: NewStateServiceService, private route: Router) {
+  constructor(private state: StateService, private route: Router) {
     this.state.getFromState('userDetails')
       .subscribe(userDetails => this.userDetails = userDetails);
   }

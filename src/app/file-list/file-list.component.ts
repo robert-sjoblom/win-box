@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { StateService } from '../state.service';
-import { NewStateServiceService, ActionType } from '../new-state-service.service';
+import { Component, OnInit } from '@angular/core';
+import { ActionType, StateService } from '../services/state.service';
+
 
 @Component({
   selector: 'file-list',
@@ -13,7 +13,7 @@ export class FileListComponent implements OnInit {
   location;
   starredItems;
 
-  constructor(private state: NewStateServiceService) { }
+  constructor(private state: StateService) { }
 
   ngOnInit() {
     this.state.getFromState('Location')

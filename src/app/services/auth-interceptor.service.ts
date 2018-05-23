@@ -1,7 +1,7 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { NewStateServiceService } from './new-state-service.service';
+import { StateService } from './state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,20 +9,24 @@ import { NewStateServiceService } from './new-state-service.service';
 export class AuthInterceptorService implements HttpInterceptor {
   token: string;
 
-  constructor(private state: NewStateServiceService) {
+  constructor(private state: StateService) {
     this.state.getFromState('userDetails')
       .subscribe(userDetails => this.token = userDetails.access_token);
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    req = req.clone({
-      setHeaders: {
-        'Content-Type' : 'application/json; charset=utf-8',
-        'Accept'       : 'application/json',
-        'Authorization': `Bearer ${this.token}`
-      }
-    });
-    console.log(req);
+    if (req.url.includes('dropbox')) {
+      req = req.clone({
+        setHeaders: {
+          'Content-Type' : 'application/json; charset=utf-8',
+          'Accept'       : 'application/json',
+          'Authorization': `Bearer ${this.token}`
+        }
+      });
+    } else {
+      // when we're implementing firebase,
+      // add the headers here.
+    }
     return next.handle(req);
   }
 }

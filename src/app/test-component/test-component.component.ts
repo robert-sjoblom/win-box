@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionType, NewStateServiceService } from '../new-state-service.service';
-import Manager from '../statemanager';
+import { ActionType, StateService } from '../services/state.service';
+import Manager from '../services/statemanager';
 
 
 @Component({
@@ -12,7 +12,7 @@ export class TestComponentComponent implements OnInit {
   filelist;
   location;
   fakelocation;
-  constructor(private state: NewStateServiceService) {
+  constructor(private state: StateService) {
     this.fakelocation = '/java/apps/tampermonkey';
   }
 

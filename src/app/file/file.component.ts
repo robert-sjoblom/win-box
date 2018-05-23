@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NewStateServiceService } from '../new-state-service.service';
+import { StateService } from '../services/state.service';
 
 
 @Component({
@@ -18,28 +18,27 @@ export class FileComponent implements OnInit {
 
   starredItems;
   tagged;
-  constructor(private route: ActivatedRoute, private state: NewStateServiceService) { };
+  constructor(private route: ActivatedRoute, private state: StateService) { }
 
   ngOnInit() {
     this.state.getFromState('starredItems')
       .subscribe(starred => this.starredItems = starred)
-    
-    this.starTest(this.file)
+
+    this.starTest(this.file);
   }
 
-  starTest(file){
-    if(this.starredItems.some(star => star.id === file.id)){
+  starTest(file) {
+    if (this.starredItems.some(star => star.id === file.id)) {
       this.tagged = true;
-    } else{
+    } else {
       this.tagged = false;
     }
   }
 
-  changeLocation(path){
-    this.pathObject.emit(path)
+  changeLocation(path) {
+    this.pathObject.emit(path);
   }
-  changeStar(file){ 
-
-    this.fileObject.emit(this.file)
+  changeStar(file) {
+    this.fileObject.emit(this.file);
   }
 }

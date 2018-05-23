@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthGuardService } from '../auth-guard.service';
-import { NewStateServiceService } from '../new-state-service.service';
+import { AuthGuardService } from '../services/auth-guard.service';
+import { StateService } from '../services/state.service';
 
 @Component({
   selector: 'main-view',
@@ -11,7 +11,7 @@ export class MainViewComponent implements OnInit {
   error;
   constructor(
     private authGuard: AuthGuardService,
-    private state: NewStateServiceService) { }
+    private state: StateService) { }
 
   ngOnInit() {
     this.state.getFromState('errorMessage')
