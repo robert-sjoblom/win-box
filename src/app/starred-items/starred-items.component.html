@@ -1,0 +1,5 @@
+<file
+  *ngFor="let star of starredItems"
+  [file]="star"
+  (fileObject)="changeStar($event)"
+></file>

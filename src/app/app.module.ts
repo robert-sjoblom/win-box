@@ -16,11 +16,13 @@ import { StateService } from './state.service';
 import { SuccessComponent } from './success/success.component';
 import { TestComponentComponent } from './test-component/test-component.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { StarredItemsComponent } from './starred-items/starred-items.component';
 
 const appRoutes: Routes = [
   { path: '',         redirectTo: 'main', pathMatch: 'full' },
   { path: 'test',     component: TestComponentComponent},
   { path: 'main',     component: MainViewComponent, canActivate: [AuthGuard]},
+  { path: 'starred',  component: StarredItemsComponent, canActivate: [AuthGuard]},
   { path: 'login',    component: LoginComponent },
   { path: 'success',  component: SuccessComponent},
   { path: '**',       component: PageNotFoundComponent}
@@ -37,7 +39,8 @@ const appRoutes: Routes = [
     FileListComponent,
     FileComponent,
     SizePipe,
-    TestComponentComponent
+    TestComponentComponent,
+    StarredItemsComponent
   ],
   imports: [
     BrowserModule,

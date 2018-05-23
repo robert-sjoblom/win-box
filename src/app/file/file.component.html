@@ -11,10 +11,13 @@
   </div>
   <div 
     id="name"
-    (click)="changePath($event)"
     >
-    <a [routerLink]="file.path_lower">{{file.name}}</a>
-    <i class="far fa-star"></i>
+    <a (click)="changeLocation(file.path_lower)">{{file.name}}</a>
+    
+    <i 
+      class="far fa-star"
+      (click)="changeStar(file)"
+      ></i>
 
   </div>
   <div id="size">

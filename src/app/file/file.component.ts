@@ -13,17 +13,19 @@ export class FileComponent implements OnInit {
 
   @Input() file;
 
-  @Output() fileObject = new EventEmitter
+  @Output() pathObject = new EventEmitter();
 
-  constructor(private route: ActivatedRoute) { }
+  @Output() fileObject = new EventEmitter();
+ 
+  constructor(private route: ActivatedRoute) { };
 
   ngOnInit() {
   }
 
-  changePath(file){
-    this.fileObject.emit(this.file)
+  changeLocation(path){
+    this.pathObject.emit(path)
   }
-  enter(event){
-    this.hover = !this.hover
+  changeStar(file){ 
+    this.fileObject.emit(this.file)
   }
 }

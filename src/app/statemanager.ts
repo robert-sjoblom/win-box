@@ -3,10 +3,10 @@ class Manager {
   private updater;
 
   _state = {
-    userDetails: { access_token: '' },
+    userDetails: { access_token: 'l4k0M7CsrbAAAAAAAAAAKskEC3SCsKi1ajezG4_8tbHWafx_TXyZLhEUXyCu0_MK' },
     Location: 'root',
     FileList: {},
-    starredItems: {},
+    starredItems: [],
   };
 
   constructor() {
@@ -29,6 +29,20 @@ class Manager {
     'Location': ([location]) => {
       this._state = {
         ...this._state, Location: location
+      };
+    },
+    'AddStar': ([file]) => {
+      const starList = [...this._state.starredItems, file];
+      this._state = {
+        ...this._state,
+        starredItems: starList
+      };
+    },
+    'RemoveStar': ([file]) => {
+      const newList = this._state.starredItems.filter((star: any) => star.id !== file.id);
+      this._state = {
+        ...this.state,
+        starredItems: newList
       };
     }
   };
