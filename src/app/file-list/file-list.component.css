@@ -32,6 +32,9 @@
     text-align: right;
 }
 @media (max-width: 550px){
+    #breadcrumbs{
+        display: none;
+    }
     #titles{
         display: none;
     }
