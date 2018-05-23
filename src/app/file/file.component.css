@@ -89,4 +89,7 @@
     #time-stamp{
         display: none;
     }
+    .fa-star{
+        display: none;
+    }
 }
