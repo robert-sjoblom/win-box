@@ -1,2 +1,7 @@
 <!-- <file-list [location]="currentLocation"></file-list> -->
 <file-list></file-list>
+
+<div *ngIf="error" class="error">
+    <p>{{error}}</p>
+    <p>Var vänlig logga ut och in igen.</p>
+</div>

@@ -1,26 +1,25 @@
-
 class Manager {
   private updater;
-// access_token: 'l4k0M7CsrbAAAAAAAAAAKskEC3SCsKi1ajezG4_8tbHWafx_TXyZLhEUXyCu0_MK'
-  _state = {
-    userDetails: { access_token: 'l4k0M7CsrbAAAAAAAAAAKskEC3SCsKi1ajezG4_8tbHWafx_TXyZLhEUXyCu0_MK' },
-    Location: 'root',
-    FileList: {},
-    starredItems: [],
-  };
+  private _state: { Location: string; FileList: {}; userDetails: {}; starredItems: any[]; errorMessage: string; };
 
   constructor() {
-    try {
+    this._state = {
+      Location: 'root',
+      FileList: {},
+      userDetails: {},
+      starredItems: [],
+      errorMessage: '',
+    };
 
-    } catch (error) {
-
+    if (localStorage.getItem('win-box') !== null) {
+      const { userDetails, starredItems } = JSON.parse(localStorage.getItem('win-box'));
+      // validate token here?
+      this._state = { ...this._state, userDetails, starredItems };
     }
   }
 
-
   statehandlers = {
     'FileList': ([location, res]) => {
-      // const loc = (!location) ? 'root' : location; // can't use empty string as key
       const newListing = { ...this._state.FileList, [location]: res };
       this._state = {
         ...this._state, FileList: newListing
@@ -41,10 +40,26 @@ class Manager {
     'RemoveStar': ([file]) => {
       const newList = this._state.starredItems.filter((star: any) => star.id !== file.id);
       this._state = {
-        ...this.state,
+        ...this._state,
         starredItems: newList
       };
-    }
+    },
+    'AddUserDetails': ([userdetails]) => {
+      const userDetails = userdetails;
+      this._state = {
+        ...this.state,
+        userDetails
+      };
+    },
+    'ErrorMessage': ([errorMessage]) => {
+      // vid error message rensar vi ut user details
+      // och sätter error message;
+      this._state = {
+        ...this._state,
+        userDetails: {},
+        errorMessage
+      };
+    },
   };
 
   invokeStatehandler(key, ...args) {
@@ -61,14 +76,11 @@ class Manager {
   saveStateToStorage() {
     const { userDetails, starredItems } = this._state;
     const stateToSave = { userDetails, starredItems};
-    console.log('yooo', stateToSave);
     localStorage.setItem('win-box', JSON.stringify(stateToSave));
-    console.log(JSON.parse(localStorage.getItem('win-box')));
-
   }
 
-  // hanterar att uppdatera state för alla subscribers
   setUpdater(updater) {
+    // uppdaterar state för alla subscribers
     this.updater = updater;
   }
 }
