@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NewStateServiceService, ActionType } from '../new-state-service.service';
+import { ActionType, StateService } from '../services/state.service';
 
 
 @Component({
@@ -8,19 +8,16 @@ import { NewStateServiceService, ActionType } from '../new-state-service.service
   styleUrls: ['./starred-items.component.css']
 })
 export class StarredItemsComponent implements OnInit {
-
   starredItems;
 
-  
-
-  constructor(private state: NewStateServiceService) { }
+  constructor(private state: StateService) { }
 
   ngOnInit() {
     this.state.getFromState('starredItems')
       .subscribe(starred => this.starredItems = starred);
   }
-  changeStar(file){
-    this.state.runAction(ActionType.RemoveStar, file)
+  changeStar(file) {
+    this.state.runAction(ActionType.RemoveStar, file);
   }
 
 }

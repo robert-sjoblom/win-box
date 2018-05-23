@@ -8,7 +8,7 @@ import Manager from './statemanager';
 @Injectable({
   providedIn: 'root'
 })
-export class NewStateServiceService {
+export class StateService {
   private subject = new BehaviorSubject(Manager.state);
 
   constructor(private dropbox: DropboxService) {
