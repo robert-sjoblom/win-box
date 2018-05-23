@@ -14,13 +14,12 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SizePipe } from './size.pipe';
 import { StateService } from './state.service';
 import { SuccessComponent } from './success/success.component';
+import { TestComponentComponent } from './test-component/test-component.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-
-
-
 
 const appRoutes: Routes = [
   { path: '',         redirectTo: 'main', pathMatch: 'full' },
+  { path: 'test',     component: TestComponentComponent},
   { path: 'main',     component: MainViewComponent, canActivate: [AuthGuard]},
   { path: 'login',    component: LoginComponent },
   { path: 'success',  component: SuccessComponent},
@@ -37,7 +36,8 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     FileListComponent,
     FileComponent,
-    SizePipe
+    SizePipe,
+    TestComponentComponent
   ],
   imports: [
     BrowserModule,

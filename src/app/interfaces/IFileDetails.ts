@@ -1,4 +1,4 @@
-export interface IFIleDetails {
+export interface IFileDetails {
   '.tag': string;
   name: string;
   path_lower: string;

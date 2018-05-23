@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { StateService } from '../state.service';
 import { AuthGuardService } from '../auth-guard.service';
+import { StateService } from '../state.service';
 
 @Component({
   selector: 'main-view',
@@ -9,12 +9,14 @@ import { AuthGuardService } from '../auth-guard.service';
 })
 export class MainViewComponent implements OnInit {
 
-  
+  currentLocation;
+  filelist;
 
   constructor(private state: StateService, private authGuard: AuthGuardService) { }
 
   ngOnInit() {
-
+    this.currentLocation = this.state.currentLocation;
+    this.filelist = this.state.getState();
   }
 
 }
