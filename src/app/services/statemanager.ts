@@ -52,14 +52,17 @@ class Manager {
       };
     },
     'ErrorMessage': ([errorMessage]) => {
-      // vid error message rensar vi ut user details
-      // och sätter error message;
+      // vid ett fel sätter vi error message;
       this._state = {
         ...this._state,
-        userDetails: {},
         errorMessage
       };
     },
+    'Logout': () => {
+      // revoke token in dropbox service
+      this.removeStateFromStorage();
+      this.constructor(); // resets state.
+    }
   };
 
   invokeStatehandler(key, ...args) {
@@ -79,10 +82,17 @@ class Manager {
     localStorage.setItem('win-box', JSON.stringify(stateToSave));
   }
 
+  removeStateFromStorage() {
+    localStorage.removeItem('win-box');
+  }
+
   setUpdater(updater) {
     // uppdaterar state för alla subscribers
     this.updater = updater;
   }
+
+
+
 }
 
 export default new Manager();
