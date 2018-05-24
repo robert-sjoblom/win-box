@@ -21,14 +21,14 @@ import { UploadBoxComponent } from './upload-box/upload-box.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 const appRoutes: Routes = [
-  { path: '',         redirectTo: 'main', pathMatch: 'full' },
-  { path: 'test',     component: TestComponentComponent},
-  { path: 'main',     component: MainViewComponent, canActivate: [AuthGuard]},
-  { path: 'starred',  component: StarredItemsComponent, canActivate: [AuthGuard]},
-  { path: 'login',    component: LoginComponent },
-  { path: 'login/:thanks', component: LoginComponent},
-  { path: 'success',  component: SuccessComponent},
-  { path: '**',       component: PageNotFoundComponent}
+  { path: '', redirectTo: 'main', pathMatch: 'full' },
+  { path: 'test', component: TestComponentComponent },
+  { path: 'main', component: MainViewComponent, canActivate: [AuthGuard] },
+  { path: 'starred', component: StarredItemsComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'login/:thanks', component: LoginComponent },
+  { path: 'success', component: SuccessComponent },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
