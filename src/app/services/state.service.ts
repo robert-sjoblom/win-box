@@ -68,6 +68,7 @@ class GetFileListing implements Action {
         map(res => res.entries)
       )
       .subscribe(res => {
+        console.log(res);
         Manager.invokeStatehandler('FileList', location, res);
         Manager.invokeStatehandler('ErrorMessage', ''); // set error message to empty string if request didn't throw
       }, err => {
