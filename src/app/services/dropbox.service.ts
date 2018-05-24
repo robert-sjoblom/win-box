@@ -48,10 +48,9 @@ export class DropboxService {
     }
   }
 
-  upload(val) {
+  upload(file) {
     // Angular uses multipart/form-data; DROPBOX DOES NOT LIKE THAT.
     // We can use XMLHttpRequests directly, instead.
-    const file = val;
     const xhr = new XMLHttpRequest();
 
     xhr.upload.onprogress = function(evt) {
