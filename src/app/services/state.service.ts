@@ -75,14 +75,14 @@ class GetFileListing implements Action {
 
   errorHandler(e) {
     const { status, error } = e;
+    let message;
     switch (status) {
       case 409:
         // har vi kommit hit betyder det att vår nuvarande Location inte längre "finns" (den kan ha blivit flyttad)
         // så vi måste ta bort den från starredItems (om den finns där)
         // Vi sätter även ett felmeddelande vi kan visa.
-        const message = `The resource you requested couldn't be found at this location.
+        message = `The resource you requested couldn't be found at this location.
         (Status code ${status})`;
-        Manager.invokeStatehandler('ErrorMessage', message);
         // fuck, vi behöver skriva om starred items så de kollar på location och inte id.
         // annars kan vi inte sortera bort gammal skit här.
         // vi tar det nu på förmiddagen.
@@ -99,6 +99,7 @@ class GetFileListing implements Action {
       console.log(error.error);
       console.log(error.error.error);
     }
+    Manager.invokeStatehandler('ErrorMessage', message);
   }
 }
 
