@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionType, StateService } from '../services/state.service';
 import Manager from '../services/statemanager';
+import { HttpClient } from '@angular/common/http';
+import { DropboxService } from '../services/dropbox.service';
 
 
 @Component({
@@ -12,7 +14,9 @@ export class TestComponentComponent implements OnInit {
   filelist;
   location;
   fakelocation;
-  constructor(private state: StateService) {
+  fakeDownload;
+
+  constructor(private state: StateService, private dropbox: DropboxService) {
     this.fakelocation = '/java/apps/tampermonkey';
   }
 
@@ -34,4 +38,7 @@ export class TestComponentComponent implements OnInit {
     this.state.runAction(ActionType.ChangeLocation, location);
     this.state.runAction(ActionType.GetFileListing, this.location);
   }
+
+  
+
 }
