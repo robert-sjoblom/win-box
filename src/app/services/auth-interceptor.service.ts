@@ -18,14 +18,14 @@ export class AuthInterceptorService implements HttpInterceptor {
     if (req.url.includes('dropbox')) {
       req = req.clone({
         setHeaders: {
-          'Content-Type' : 'application/json; charset=utf-8',
-          'Accept'       : 'application/json',
+          'Content-Type': 'application/json; charset=utf-8',
+          'Accept': 'application/json',
           'Authorization': `Bearer ${this.token}`
         }
       });
     } else {
-      // when we're implementing firebase,
-      // add the headers here.
+      // when we're implementing firebase.
+      // is it pretty? no. is it any good? who knows.
     }
     return next.handle(req);
   }

@@ -1,6 +1,8 @@
+import { IUserDetails } from '../interfaces/IUserDetails';
+
 class Manager {
   private updater;
-  private _state: { Location: string; FileList: {}; userDetails: {}; starredItems: any[]; errorMessage: string; };
+  private _state: { Location: string; FileList: {}; userDetails: IUserDetails; starredItems: any[]; errorMessage: string; };
 
   constructor() {
     this._state = {
@@ -90,9 +92,6 @@ class Manager {
     // uppdaterar state för alla subscribers
     this.updater = updater;
   }
-
-
-
 }
 
 export default new Manager();
