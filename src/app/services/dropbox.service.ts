@@ -13,7 +13,7 @@ export class DropboxService {
   dropboxClient = new Dropbox({ clientId: this.appKey });
 
   authUrl = this.dropboxClient.getAuthenticationUrl(this.redirect, 'fly, you fools!', 'token');
-  apiUrl = 'https://api.dropboxapi.com/2/files/';
+  apiUrl = 'https://api.dropboxapi.com/2/';
 
   constructor(private http: HttpClient) { }
 
@@ -21,10 +21,13 @@ export class DropboxService {
     return this.authUrl;
   }
 
+  revokeToken() {
+    this.http.post(`${this.apiUrl}auth/token/revoke`, {});
+  }
 
   getFileList(location: string): Observable<any> {
     const body = {};
     body['path'] = (location === 'root') ? '' : location;
-    return this.http.post(`${this.apiUrl}list_folder`, body);
+    return this.http.post(`${this.apiUrl}files/list_folder`, body);
   }
 }
