@@ -10,11 +10,12 @@
 #titles{
     width: 95%;
     display: grid;
-    grid-template-columns: 6% 48% 15% 30%;
+    grid-template-columns: 6% 48% 15% 20% 10%;
     margin-bottom: 10px;
     padding-bottom: 15px;
     border-bottom: 1px solid #444444;
 }
+
 #title-icon{
     width: 100%;
     text-align: left;
@@ -28,6 +29,10 @@
     text-align: left;
 }
 #title-time{
+    width: 100%;
+    text-align: right;
+}
+#title-download{
     width: 100%;
     text-align: right;
 }

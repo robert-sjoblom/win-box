@@ -8,3 +8,15 @@
 <ul *ngIf="filelist?.length">
   <li *ngFor="let file of filelist"><a (click)="changeLocation(file.path_lower)" >{{file.name}}</a></li>
 </ul>
+
+<div id="download">
+    <a 
+
+      (click)="downloadFile('/41-726x940.jpg')"
+      download="fakeDownload"
+      >
+      <i 
+      class="fas fa-download"
+      
+      ></i></a>
+</div>

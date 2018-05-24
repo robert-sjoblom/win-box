@@ -27,4 +27,14 @@
   <div id="time-stamp">
     {{file.client_modified | date:'fullDate':''}}
   </div>
+  <div id="download">
+      <a 
+        
+        (click)="downloadFile(file)"
+        >
+        <i 
+        class="fas fa-download"
+        
+        ></i></a>
+  </div>
 </div>

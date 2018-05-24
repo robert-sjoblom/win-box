@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StateService } from '../services/state.service';
+import { DropboxService } from '../services/dropbox.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class FileComponent implements OnInit {
 
   starredItems;
   tagged;
-  constructor(private route: ActivatedRoute, private state: StateService) { }
+  constructor(private route: ActivatedRoute, private state: StateService, private dropbox: DropboxService) { }
 
   ngOnInit() {
     this.state.getFromState('starredItems')
@@ -40,5 +41,17 @@ export class FileComponent implements OnInit {
   }
   changeStar(file) {
     this.fileObject.emit(this.file);
+  }
+
+  downloadFile(file){
+    this.dropbox.download(file)
+      .then(resp => {
+        const a = document.createElement('a');
+        a.setAttribute('href', resp.link);
+        a.style.display = 'none';
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+      })
   }
 }
