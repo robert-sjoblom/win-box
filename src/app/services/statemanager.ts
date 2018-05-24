@@ -58,6 +58,11 @@ class Manager {
         errorMessage
       };
     },
+    'Logout': () => {
+      // revoke token in dropbox service
+      this.removeStateFromStorage();
+      this.constructor(); // resets state.
+    }
   };
 
   invokeStatehandler(key, ...args) {
@@ -77,10 +82,17 @@ class Manager {
     localStorage.setItem('win-box', JSON.stringify(stateToSave));
   }
 
+  removeStateFromStorage() {
+    localStorage.removeItem('win-box');
+  }
+
   setUpdater(updater) {
     // uppdaterar state för alla subscribers
     this.updater = updater;
   }
+
+
+
 }
 
 export default new Manager();

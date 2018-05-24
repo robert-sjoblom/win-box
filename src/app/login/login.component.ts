@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { DropboxService } from '../services/dropbox.service';
 
 
@@ -11,9 +12,12 @@ import { DropboxService } from '../services/dropbox.service';
 export class LoginComponent implements OnInit {
 
   loginUrl;
-  constructor(private dropbox: DropboxService) { }
-
+  thanks;
+  constructor(private dropbox: DropboxService, private route: ActivatedRoute) { }
+  // private router: Router
   ngOnInit() {
     this.loginUrl = this.dropbox.url();
+    this.route.paramMap
+      .subscribe(params => this.thanks = params.get('thanks'));
   }
 }

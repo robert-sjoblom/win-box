@@ -33,7 +33,6 @@ export class StateService {
       case ActionType.RemoveStar:
         new RemoveStar().run(args);
         break;
-
       case ActionType.AddUserDetails:
         new AddUserDetails().run(args);
         break;
@@ -49,6 +48,10 @@ export class StateService {
 
   updateSubscribers() {
     this.subject.next(Manager.state);
+  }
+
+  logout() {
+    new Logout().run(); // billigt sätt att göra det på.
   }
 }
 
@@ -124,6 +127,12 @@ class AddStar implements Action {
 class AddUserDetails implements Action {
   run(userdetails) {
     Manager.invokeStatehandler('AddUserDetails', userdetails);
+  }
+}
+
+class Logout implements Action {
+  run() {
+    Manager.invokeStatehandler('Logout');
   }
 }
 export enum ActionType {
