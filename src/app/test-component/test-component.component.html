@@ -5,9 +5,9 @@
 <h2>Fake location: {{ fakelocation }}</h2>
 <button (click)="handleClick()">Click me for list</button>
 <button (click)="printLocalStorage()">Test save state to storage</button>
-<ul *ngIf="filelist?.length">
+<!-- <ul *ngIf="filelist?.length">
   <li *ngFor="let file of filelist"><a (click)="changeLocation(file.path_lower)" >{{file.name}}</a></li>
-</ul>
+</ul> -->
 
 <div id="download">
     <a 
@@ -19,4 +19,8 @@
       class="fas fa-download"
       
       ></i></a>
+</div>
+
+<div>
+  <upload-box></upload-box>
 </div>

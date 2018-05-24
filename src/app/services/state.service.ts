@@ -50,6 +50,9 @@ export class StateService {
     this.subject.next(Manager.state);
   }
 
+  upload(val) {
+    this.dropbox.upload(val);
+  }
   logout() {
     new Logout(this.dropbox).run();
   }
@@ -68,7 +71,6 @@ class GetFileListing implements Action {
         map(res => res.entries)
       )
       .subscribe(res => {
-        console.log(res);
         Manager.invokeStatehandler('FileList', location, res);
         Manager.invokeStatehandler('ErrorMessage', ''); // set error message to empty string if request didn't throw
       }, err => {

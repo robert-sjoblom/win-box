@@ -17,6 +17,7 @@ import { SizePipe } from './size.pipe';
 import { StarredItemsComponent } from './starred-items/starred-items.component';
 import { SuccessComponent } from './success/success.component';
 import { TestComponentComponent } from './test-component/test-component.component';
+import { UploadBoxComponent } from './upload-box/upload-box.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 const appRoutes: Routes = [
@@ -43,7 +44,8 @@ const appRoutes: Routes = [
     SizePipe,
     TestComponentComponent,
     StarredItemsComponent,
-    LogoutComponent
+    LogoutComponent,
+    UploadBoxComponent
   ],
   imports: [
     BrowserModule,
