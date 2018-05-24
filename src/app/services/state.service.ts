@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import Action from '../interfaces/IActions';
 import { DropboxService } from './dropbox.service';
 import Manager from './statemanager';
 
@@ -58,13 +59,18 @@ export class StateService {
   }
 }
 
-interface Action {
-  run(params?: any[]);
+export enum ActionType {
+  GetFileListing,
+  ChangeLocation,
+  AddStar,
+  RemoveStar,
+  AddUserDetails
 }
 
+// can we move this elsewhere somehow, without fucking up everything?
+// No.
 class GetFileListing implements Action {
   constructor(private dropbox: DropboxService) { }
-
   run(location) {
     this.dropbox.getFileList(location)
       .pipe(
@@ -78,36 +84,23 @@ class GetFileListing implements Action {
       });
   }
 
-  // move this fucker out of getfilelisting and into a proper error
-  // handling service.
   errorHandler(e) {
-    const { status, error } = e;
+    const { status } = e;
     let message;
     switch (status) {
-      case 409:
-        // har vi kommit hit betyder det att vår nuvarande Location inte längre "finns" (den kan ha blivit flyttad)
-        // så vi måste ta bort den från starredItems (om den finns där)
-        // Vi sätter även ett felmeddelande vi kan visa.
-        message = `The resource you requested couldn't be found at this location.
-        (Status code ${status})`;
-        // fuck, vi behöver skriva om starred items så de kollar på location och inte id.
-        // annars kan vi inte sortera bort gammal skit här.
-        // vi tar det nu på förmiddagen.
-        // "#My Files" ska leda till root, inte till Location; -> görs genom att sätta Location till 'root' i länken, typ.
-        console.log('got here okay');
+      case 400:
+        message = `Bad Request (Status code ${status})`;
         break;
       case 401:
-        message = `You're not authorized to do that. It could be that your token expired or was revoked.
-        We've decided to revoke your token, just in case.
-        You will need to re-authorize to continue using this service.
-        (Status code ${status}`;
-        // remove token here.
+        message = `You will need to re-authorize to continue using this service. (Status code ${status}`;
+        this.dropbox.revokeToken();
         break;
+      case 409:
+        message = `The resource you requested couldn't be found at this location. (Status code ${status})`;
+        break;
+      // remove stars here, when everything is fixed.
       default:
-        console.log(`we don't know this error.`);
-        console.log(error);
-        console.log(error.error);
-        console.log(error.error.error);
+        message = 'Fuck if I know, boi.';
     }
     Manager.invokeStatehandler('ErrorMessage', message);
   }
@@ -143,11 +136,4 @@ class Logout implements Action {
     this.dropbox.revokeToken();
     Manager.invokeStatehandler('Logout');
   }
-}
-export enum ActionType {
-  GetFileListing,
-  ChangeLocation,
-  AddStar,
-  RemoveStar,
-  AddUserDetails
 }

@@ -40,7 +40,7 @@ class Manager {
       };
     },
     'RemoveStar': ([file]) => {
-      const newList = this._state.starredItems.filter((star: any) => star.id !== file.id);
+      const newList = this._state.starredItems.filter((star: any) => star.path_lower !== file.path_lower);
       this._state = {
         ...this._state,
         starredItems: newList
@@ -54,7 +54,6 @@ class Manager {
       };
     },
     'ErrorMessage': ([errorMessage]) => {
-      // vid ett fel sätter vi error message;
       this._state = {
         ...this._state,
         errorMessage
