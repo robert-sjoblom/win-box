@@ -60,7 +60,6 @@ class Manager {
       };
     },
     'Logout': () => {
-      // revoke token in dropbox service
       this.removeStateFromStorage();
       this.constructor(); // resets state.
     }
