@@ -52,11 +52,9 @@ class Manager {
       };
     },
     'ErrorMessage': ([errorMessage]) => {
-      // vid error message rensar vi ut user details
-      // och sätter error message;
+      // vid ett fel sätter vi error message;
       this._state = {
         ...this._state,
-        userDetails: {},
         errorMessage
       };
     },

@@ -65,12 +65,40 @@ class GetFileListing implements Action {
         map(res => res.entries)
       )
       .subscribe(res => {
+        console.log(res);
         Manager.invokeStatehandler('FileList', location, res);
+        Manager.invokeStatehandler('ErrorMessage', ''); // vi tömmer error message om vår request funkar.
       }, err => {
-        const msg = `Status: ${err.status}, ${err.statusText}`;
-        Manager.invokeStatehandler('ErrorMessage', msg);
+        this.errorHandler(err);
       });
+  }
 
+  errorHandler(e) {
+    const { status, error } = e;
+    switch (status) {
+      case 409:
+        // har vi kommit hit betyder det att vår nuvarande Location inte längre "finns" (den kan ha blivit flyttad)
+        // så vi måste ta bort den från starredItems (om den finns där)
+        // Vi sätter även ett felmeddelande vi kan visa.
+        const message = `The resource you requested couldn't be found at this location.
+        (Status code ${status})`;
+        Manager.invokeStatehandler('ErrorMessage', message);
+        // fuck, vi behöver skriva om starred items så de kollar på location och inte id.
+        // annars kan vi inte sortera bort gammal skit här.
+        // vi tar det nu på förmiddagen.
+        // "#My Files" ska leda till root, inte till Location; -> görs genom att sätta Location till 'root' i länken, typ.
+        console.log('got here okay');
+        break;
+      case 401:
+        // det här är Unauthorized. Fixa idag.
+        // Om unauthorized, logga ut användaren?
+        break;
+      default:
+      console.log(`we don't know this error.`);
+      console.log(error);
+      console.log(error.error);
+      console.log(error.error.error);
+    }
   }
 }
 
