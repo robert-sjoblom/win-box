@@ -9,10 +9,10 @@
     <p>#WIN_BOX</p>
   </header>
 
-  <nav 
+  <nav
     *ngIf="toggleMenu"
     id="navigation">
-    <i 
+    <i
 
       (click)="toggleMenu = !toggleMenu"
       class="fas fa-times"></i>
@@ -25,7 +25,8 @@
       <li>#Deleted Files</li>
     </ul>
     <div id="nav-bottom">
-        <div id="nav-button"><a href="">#Log_Out</a></div>
+        <logout></logout>
+        <!-- <div class="nav-button"><a href="">#Log_Out</a></div> -->
         <div id="nav-info">
             <div>Info</div>
             <div>Contact</div>

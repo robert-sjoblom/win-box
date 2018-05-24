@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { FileListComponent } from './file-list/file-list.component';
 import { FileComponent } from './file/file.component';
 import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
 import { MainViewComponent } from './main-view/main-view.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
@@ -24,6 +25,7 @@ const appRoutes: Routes = [
   { path: 'main',     component: MainViewComponent, canActivate: [AuthGuard]},
   { path: 'starred',  component: StarredItemsComponent, canActivate: [AuthGuard]},
   { path: 'login',    component: LoginComponent },
+  { path: 'login/:thanks', component: LoginComponent},
   { path: 'success',  component: SuccessComponent},
   { path: '**',       component: PageNotFoundComponent}
 ];
@@ -40,12 +42,13 @@ const appRoutes: Routes = [
     FileComponent,
     SizePipe,
     TestComponentComponent,
-    StarredItemsComponent
+    StarredItemsComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: false }),
+    RouterModule.forRoot(appRoutes, { enableTracing: true }),
   ],
   providers: [DropboxService, StateService, {
     provide: HTTP_INTERCEPTORS,

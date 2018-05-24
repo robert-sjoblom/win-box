@@ -17,7 +17,7 @@ export class StateService {
     });
     // vi ger Manager en funktion som uppdaterar alla våra subscribers, så att
     // Manager kan uppdatera när den vet att det behövs, istället.
-   }
+  }
 
   runAction(action: ActionType, args) {
     switch (action) {
@@ -33,7 +33,6 @@ export class StateService {
       case ActionType.RemoveStar:
         new RemoveStar().run(args);
         break;
-
       case ActionType.AddUserDetails:
         new AddUserDetails().run(args);
         break;
@@ -49,6 +48,10 @@ export class StateService {
 
   updateSubscribers() {
     this.subject.next(Manager.state);
+  }
+
+  logout() {
+    new Logout(this.dropbox).run();
   }
 }
 
@@ -67,12 +70,14 @@ class GetFileListing implements Action {
       .subscribe(res => {
         console.log(res);
         Manager.invokeStatehandler('FileList', location, res);
-        Manager.invokeStatehandler('ErrorMessage', ''); // vi tömmer error message om vår request funkar.
+        Manager.invokeStatehandler('ErrorMessage', ''); // set error message to empty string if request didn't throw
       }, err => {
         this.errorHandler(err);
       });
   }
 
+  // move this fucker out of getfilelisting and into a proper error
+  // handling service.
   errorHandler(e) {
     const { status, error } = e;
     let message;
@@ -90,14 +95,17 @@ class GetFileListing implements Action {
         console.log('got here okay');
         break;
       case 401:
-        // det här är Unauthorized. Fixa idag.
-        // Om unauthorized, logga ut användaren?
+        message = `You're not authorized to do that. It could be that your token expired or was revoked.
+        We've decided to revoke your token, just in case.
+        You will need to re-authorize to continue using this service.
+        (Status code ${status}`;
+        // remove token here.
         break;
       default:
-      console.log(`we don't know this error.`);
-      console.log(error);
-      console.log(error.error);
-      console.log(error.error.error);
+        console.log(`we don't know this error.`);
+        console.log(error);
+        console.log(error.error);
+        console.log(error.error.error);
     }
     Manager.invokeStatehandler('ErrorMessage', message);
   }
@@ -124,6 +132,14 @@ class AddStar implements Action {
 class AddUserDetails implements Action {
   run(userdetails) {
     Manager.invokeStatehandler('AddUserDetails', userdetails);
+  }
+}
+
+class Logout implements Action {
+  constructor(private dropbox: DropboxService) { }
+  run() {
+    this.dropbox.revokeToken();
+    Manager.invokeStatehandler('Logout');
   }
 }
 export enum ActionType {
