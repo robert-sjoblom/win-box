@@ -43,8 +43,8 @@ export class FileComponent implements OnInit {
     this.fileObject.emit(this.file);
   }
 
-  downloadFile(file) {
-    this.dropbox.download(file)
+  downloadFile(path) {
+    this.dropbox.download(path)
       .then(resp => {
         const a = document.createElement('a');
         a.setAttribute('href', resp.link);

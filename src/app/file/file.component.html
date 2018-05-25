@@ -1,4 +1,4 @@
-<div 
+<div
   id="file-wrapper"
 >
   <div id="icon">
@@ -9,12 +9,12 @@
         <i class="far fa-file-alt"></i>
     </div>
   </div>
-  <div 
+  <div
     id="name"
     >
     <a (click)="changeLocation(file.path_lower)">{{file.name}}</a>
-    
-    <i 
+
+    <i
       class="far fa-star"
       (click)="changeStar(file); starTest(file);"
       [ngClass]="{'bold' : tagged}"
@@ -28,13 +28,13 @@
     {{file.client_modified | date:'fullDate':''}}
   </div>
   <div id="download">
-      <a 
-        
-        (click)="downloadFile(file)"
+      <a
+        *ngIf="file['.tag'] == 'file'"
+        (click)="downloadFile(file.path_lower)"
         >
-        <i 
+        <i
         class="fas fa-download"
-        
+
         ></i></a>
   </div>
 </div>

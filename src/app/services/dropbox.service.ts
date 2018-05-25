@@ -17,7 +17,6 @@ export class DropboxService {
   apiUrl = 'https://api.dropboxapi.com/2/';
 
   constructor(private http: HttpClient) {
-    this.dropboxClient.setAccessToken('l4k0M7CsrbAAAAAAAAAANuvqmgo_ErdZJgspxT91bmyFb5MV97IYnsrePCA6lHYE');
   }
 
   url() {
@@ -34,24 +33,18 @@ export class DropboxService {
     return this.http.post(`${this.apiUrl}files/list_folder`, body);
   }
 
-  download(file): any {
-    if (file['.tag'] === 'folder') {
-      // return fetch('https://content.dropboxapi.com/2/files/download_zip', {
-      //   method: 'POST',
-      //   headers: new Headers({
-      //     'Authorization': 'Bearer l4k0M7CsrbAAAAAAAAAAOMmP5G9iaeBBAaGQe8k8qwWxJQsvJCMQkFIYMwXms6fo',
-      //     'Dropbox-API-Arg': '{"path":"/React"}'
-      //   })
-      // })
-    } else {
-      return this.dropboxClient.filesGetTemporaryLink({ path: file.path_lower });
-    }
+  download(path): any {
+    const token = Manager.state.userDetails.access_token;
+    this.dropboxClient.setAccessToken(token);
+      return this.dropboxClient.filesGetTemporaryLink({ path });
   }
 
   upload(file) {
     // Angular uses multipart/form-data; DROPBOX DOES NOT LIKE THAT.
     // We can use XMLHttpRequests directly, instead.
     const xhr = new XMLHttpRequest();
+    const prefix = (Manager.state.Location === 'root' ? '' : Manager.state.Location);
+    const path = `${prefix}/${file.name}`;
 
     xhr.upload.onprogress = function(evt) {
       console.log(evt);
@@ -75,7 +68,7 @@ export class DropboxService {
     xhr.setRequestHeader('Authorization', 'Bearer ' + Manager.state.userDetails.access_token);
     xhr.setRequestHeader('Content-Type', 'application/octet-stream');
     xhr.setRequestHeader('Dropbox-API-Arg', JSON.stringify({
-      path: Manager.state.Location + '/' + file.name,
+      path: path,
       mode: 'add',
       autorename: true,
       mute: false
