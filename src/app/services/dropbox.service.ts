@@ -7,8 +7,6 @@ import Manager from './statemanager';
   providedIn: 'root'
 })
 export class DropboxService {
-
-
   appKey = 'mkbet5s6hmzjcte';
   redirect = 'http://localhost:4200/success';
   dropboxClient = new Dropbox({ clientId: this.appKey });
@@ -39,7 +37,7 @@ export class DropboxService {
       return this.dropboxClient.filesGetTemporaryLink({ path });
   }
 
-  upload(file) {
+  upload(file, writeState, updateSubscribers) {
     // Angular uses multipart/form-data; DROPBOX DOES NOT LIKE THAT.
     // We can use XMLHttpRequests directly, instead.
     const xhr = new XMLHttpRequest();
@@ -47,8 +45,8 @@ export class DropboxService {
     const path = `${prefix}/${file.name}`;
 
     xhr.upload.onprogress = function(evt) {
-      console.log(evt);
       // Upload in progress. Do something here with the percent complete.
+      writeState(evt);
     };
 
     xhr.onload = function() {
@@ -56,10 +54,12 @@ export class DropboxService {
         const fileInfo = JSON.parse(xhr.response);
         console.log('shit yea, dat worked!');
         console.log(fileInfo);
+        writeState('onload', 'success');
       } else {
         const errorMsg = xhr.response || 'Unable to upload file.';
         console.log('got an error here boi', );
         console.log(errorMsg);
+        writeState('onload', 'failure', errorMsg);
         // something went wrong.
       }
     };

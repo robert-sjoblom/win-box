@@ -9,6 +9,19 @@
   <div class="box__error">Error! <span></span>.</div>
 </form> -->
 
+
+<div class="box">
 <form class="uploadBox">
-  <input type="file" name="file" (change)="handleChange($event.target.files)">
+  <div class="input">
+    <input class="box__file" type="file" name="file" id="file" (change)="handleChange($event.target.files)">
+    <div class="box__uploading">Uploading&hellip;</div>
+    <div class="box__success">Done!</div>
+    <div class="box__error">Error!</div>
+  </div>
 </form>
+</div>
+
+
+<p>status: {{ uploadingState?.isUploading }}</p>
+<p>progress: {{ uploadingState?.progress }}%</p>
+<p>error: {{ uploadingState?.error }}</p>

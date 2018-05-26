@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StateService } from '../services/state.service';
+import { UploadService } from './upload.service';
 
 @Component({
   selector: 'upload-box',
@@ -7,17 +7,20 @@ import { StateService } from '../services/state.service';
   styleUrls: ['./upload-box.component.css']
 })
 export class UploadBoxComponent implements OnInit {
+  uploadingState;
   fileToUpload: File;
-  constructor(private state: StateService) { }
+  constructor(private upload: UploadService) { }
+
 
   ngOnInit() {
+    this.upload.getUploadingState()
+      .subscribe(state => this.uploadingState = state);
   }
 
   handleChange(files) {
     const formData: FormData = new FormData();
     this.fileToUpload = files.item(0);
-    console.log(this.fileToUpload);
-    this.state.upload(this.fileToUpload);
+    this.upload.upload(this.fileToUpload);
   }
 
   /*
