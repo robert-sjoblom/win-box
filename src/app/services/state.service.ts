@@ -51,9 +51,6 @@ export class StateService {
     this.subject.next(Manager.state);
   }
 
-  upload(val) {
-    this.dropbox.upload(val);
-  }
   logout() {
     new Logout(this.dropbox).run();
   }

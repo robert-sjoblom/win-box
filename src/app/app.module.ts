@@ -18,6 +18,7 @@ import { StarredItemsComponent } from './starred-items/starred-items.component';
 import { SuccessComponent } from './success/success.component';
 import { TestComponentComponent } from './test-component/test-component.component';
 import { UploadBoxComponent } from './upload-box/upload-box.component';
+import { UploadService } from './upload-box/upload.service';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 const appRoutes: Routes = [
@@ -52,7 +53,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true }),
   ],
-  providers: [DropboxService, StateService, {
+  providers: [UploadService, DropboxService, StateService, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptorService,
     multi: true
