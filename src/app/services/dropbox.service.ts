@@ -46,7 +46,7 @@ export class DropboxService {
 
     xhr.upload.onprogress = function(evt) {
       // Upload in progress. Do something here with the percent complete.
-      writeState(evt);
+      writeState(evt, 'no', 'no');
     };
 
     xhr.onload = function() {
