@@ -10,7 +10,7 @@ export class UploadService {
   private subject = new BehaviorSubject(this.uploadingState);
 
   constructor(private dropbox: DropboxService) {
-    this.uploadingState = { isUploading: false, progress: 0, error: null };
+    this.uploadingState = { isUploading: false, progress: 0, error: null, success: false };
   }
 
   upload(val) {
@@ -25,12 +25,10 @@ export class UploadService {
     if (evt === 'onload') {
       switch (response) {
         case 'success':
-          console.log('dis worked fine.');
-          this.uploadingState = { isUploading: false, progress: 100, error: null };
+          this.uploadingState = { isUploading: false, progress: 100, error: null, success: true };
           break;
         case 'failure':
-          console.log('dis didnt work fine');
-          this.uploadingState = { isUploading: false, progress: 0, error: msg };
+          this.uploadingState = { isUploading: false, progress: 0, error: msg, success: false };
       }
     } else {
       const progress = Math.floor((evt.loaded / evt.total) * 100);

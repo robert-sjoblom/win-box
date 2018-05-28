@@ -11,7 +11,6 @@ export class UploadBoxComponent implements OnInit {
   fileToUpload: File;
   constructor(private upload: UploadService) { }
 
-
   ngOnInit() {
     this.upload.getUploadingState()
       .subscribe(state => this.uploadingState = state);
