@@ -54,7 +54,7 @@ export class FileComponent implements OnInit {
         let url = URL.createObjectURL(res.fileBlob);
         let img = document.createElement('img');
         img.src = url;
-        console.log(img);
+        img.setAttribute('class', "wow")
         this.thumbnailLink = true;
         document.getElementById(this.file.id).appendChild(img);
       })

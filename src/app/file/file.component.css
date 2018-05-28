@@ -67,6 +67,7 @@
     color: rgb(52, 128, 204);   
     cursor: pointer;
 }
+
 @media (max-width: 550px){
     #file-wrapper{
         display: block;
