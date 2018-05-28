@@ -18,28 +18,11 @@ export class UploadBoxComponent implements OnInit {
 
   handleChange(files) {
     const formData: FormData = new FormData();
-
     this.fileToUpload = files.item(0);
-
     if ((this.fileToUpload.size / 1024 ** 2) < 150) {
-    this.upload.upload(this.fileToUpload);
+      this.upload.upload(this.fileToUpload);
     } else {
       alert('Too big, too big!');
     }
   }
-
-  /*
-  isAdvancedUpload = () => {
-    // tests whether drag and drop functionality exists in browser.
-    // source: https://css-tricks.com/drag-and-drop-file-uploading/
-    const div = document.createElement('div');
-
-    return (
-      ('draggable' in div)
-      || ('ondragstart' in div && 'ondrop' in div))
-      && 'FormData' in window
-      && 'FileReader' in window;
-  }
-  */
-
 }
