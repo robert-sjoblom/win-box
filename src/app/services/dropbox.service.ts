@@ -45,15 +45,12 @@ export class DropboxService {
     const path = `${prefix}/${file.name}`;
 
     xhr.upload.onprogress = function(evt) {
-      // Upload in progress. Do something here with the percent complete.
       writeState(evt, 'no', 'no');
     };
 
     xhr.onload = function() {
       if (xhr.status === 200) {
         const fileInfo = JSON.parse(xhr.response);
-        console.log('shit yea, dat worked!');
-        console.log(fileInfo);
         writeState('onload', 'success');
       } else {
         const errorMsg = xhr.response || 'Unable to upload file.';
