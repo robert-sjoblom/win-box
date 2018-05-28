@@ -155,7 +155,8 @@ i{
     .nav-button{
         width: 100%;
         padding-top: 50px;
-        border-top: 1px solid #555555
+        border-top: 1px solid #555555;
+        cursor: pointer;
     }
     #navigation ul li, #navigation i, #navigation a{
         color: rgb(231, 229, 229);

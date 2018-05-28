@@ -53,6 +53,7 @@ export class StateService {
 
   logout() {
     new Logout(this.dropbox).run();
+    this.updateSubscribers();
   }
 }
 

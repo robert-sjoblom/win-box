@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StateService } from '../services/state.service';
 import { UploadService } from './upload.service';
 
 @Component({
@@ -9,11 +10,26 @@ import { UploadService } from './upload.service';
 export class UploadBoxComponent implements OnInit {
   uploadingState;
   fileToUpload: File;
-  constructor(private upload: UploadService) { }
+  // this is a bad way to solve it :/
+  path;
+  display;
+  constructor(private upload: UploadService, private state: StateService) { }
 
   ngOnInit() {
     this.upload.getUploadingState()
       .subscribe(state => this.uploadingState = state);
+
+    this.state.getFromState('Location')
+      .subscribe(res => this.path = res);
+
+    this.state.getFromState('userDetails')
+      .subscribe(res => {
+        if (res.access_token) {
+          this.display = true;
+        } else {
+          this.display = false;
+        }
+      });
   }
 
   handleChange(files) {
