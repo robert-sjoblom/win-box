@@ -15,6 +15,8 @@ export class StarredItemsComponent implements OnInit {
   ngOnInit() {
     this.state.getFromState('starredItems')
       .subscribe(starred => this.starredItems = starred);
+
+    this.state.runAction(ActionType.ChangeLocation, 'starred');
   }
   changeStar(file) {
     this.state.runAction(ActionType.RemoveStar, file);
