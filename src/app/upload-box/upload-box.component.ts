@@ -18,8 +18,14 @@ export class UploadBoxComponent implements OnInit {
 
   handleChange(files) {
     const formData: FormData = new FormData();
+
     this.fileToUpload = files.item(0);
+
+    if ((this.fileToUpload.size / 1024 ** 2) < 150) {
     this.upload.upload(this.fileToUpload);
+    } else {
+      alert('Too big, too big!');
+    }
   }
 
   /*
