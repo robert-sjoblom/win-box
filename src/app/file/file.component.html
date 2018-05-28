@@ -5,7 +5,13 @@
     <div *ngIf="file['.tag'] == 'folder'">
       <i class="fas fa-folder-open"></i>
     </div>
-    <div *ngIf="file['.tag'] == 'file'">
+    
+    <div
+      [id]="file.id"
+    >
+    </div>
+
+    <div *ngIf="file['.tag'] == 'file' && !thumbnailLink">
         <i class="far fa-file-alt"></i>
     </div>
   </div>
@@ -28,13 +34,11 @@
     {{file.client_modified | date:'fullDate':''}}
   </div>
   <div id="download">
-      <a
-        *ngIf="file['.tag'] == 'file'"
-        (click)="downloadFile(file.path_lower)"
+      <a 
+        (click)="downloadFile(file)"
         >
-        <i
+        <i 
         class="fas fa-download"
-
         ></i></a>
   </div>
 </div>

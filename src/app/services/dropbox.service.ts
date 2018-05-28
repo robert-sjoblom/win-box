@@ -73,4 +73,30 @@ export class DropboxService {
 
     xhr.send(file);
   }
+
+  thumbnail(file){
+    let test = {
+      path: file,
+    }
+    return this.dropboxClient.filesGetThumbnail(test)
+  }
+  
+  download(file): any{
+    if(file['.tag'] === 'folder'){
+      
+      // return fetch('https://content.dropboxapi.com/2/files/download_zip', {
+      //   method: 'POST',
+      //   headers: new Headers({
+      //     'Authorization': 'Bearer l4k0M7CsrbAAAAAAAAAAOMmP5G9iaeBBAaGQe8k8qwWxJQsvJCMQkFIYMwXms6fo',
+      //     'Dropbox-API-Arg': '{"path":"/React"}' 
+      //   })
+      // })
+  
+    } else {
+      return this.dropboxClient.filesGetTemporaryLink({path: file.path_lower})
+    
+    }
+    
+    
+  } 
 }

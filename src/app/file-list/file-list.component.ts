@@ -26,7 +26,6 @@ export class FileListComponent implements OnInit {
       .subscribe(starredItems => this.starredItems = starredItems);
 
     this.state.runAction(ActionType.GetFileListing, this.location);
-
   }
   changeLocation(location) {
     this.state.runAction(ActionType.ChangeLocation, location);
