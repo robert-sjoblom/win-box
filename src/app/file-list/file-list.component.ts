@@ -20,13 +20,15 @@ export class FileListComponent implements OnInit {
       .subscribe(location => this.location = location);
 
     this.state.getFromState('FileList')
-      .subscribe(filelist => this.filelist = filelist[this.location]);
+      .subscribe(filelist => this.filelist = filelist[this.location],
+        /* errorCallback */);
 
     this.state.getFromState('starredItems')
       .subscribe(starredItems => this.starredItems = starredItems);
 
     this.state.runAction(ActionType.GetFileListing, this.location);
   }
+
   changeLocation(location) {
     this.state.runAction(ActionType.ChangeLocation, location);
     this.state.runAction(ActionType.GetFileListing, this.location);
