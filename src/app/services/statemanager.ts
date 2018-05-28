@@ -1,6 +1,8 @@
+import { IUserDetails } from '../interfaces/IUserDetails';
+
 class Manager {
   private updater;
-  private _state: { Location: string; FileList: {}; userDetails: {}; starredItems: any[]; errorMessage: string; };
+  private _state: { Location: string; FileList: {}; userDetails: IUserDetails; starredItems: any[]; errorMessage: string; };
 
   constructor() {
     this._state = {
@@ -38,7 +40,7 @@ class Manager {
       };
     },
     'RemoveStar': ([file]) => {
-      const newList = this._state.starredItems.filter((star: any) => star.id !== file.id);
+      const newList = this._state.starredItems.filter((star: any) => star.path_lower !== file.path_lower);
       this._state = {
         ...this._state,
         starredItems: newList
@@ -52,14 +54,15 @@ class Manager {
       };
     },
     'ErrorMessage': ([errorMessage]) => {
-      // vid error message rensar vi ut user details
-      // och sätter error message;
       this._state = {
         ...this._state,
-        userDetails: {},
         errorMessage
       };
     },
+    'Logout': () => {
+      this.removeStateFromStorage();
+      this.constructor(); // resets state.
+    }
   };
 
   invokeStatehandler(key, ...args) {
@@ -77,6 +80,10 @@ class Manager {
     const { userDetails, starredItems } = this._state;
     const stateToSave = { userDetails, starredItems};
     localStorage.setItem('win-box', JSON.stringify(stateToSave));
+  }
+
+  removeStateFromStorage() {
+    localStorage.removeItem('win-box');
   }
 
   setUpdater(updater) {

@@ -1,0 +1,26 @@
+<div *ngIf="display && path !== 'starred'">
+  <div class="box">
+    <form class="uploadBox">
+      <div class="input">
+        <input class="box__file" type="file" name="file" id="file" (change)="handleChange($event.target.files)">
+        <div class="box__success">Done!</div>
+        <div class="box__error">Error!</div>
+      </div>
+    </form>
+  </div>
+
+  <div class="info">
+    <h4 *ngIf="!uploadingState?.isUploading">Drop a file on the arrow to upload.</h4>
+    <div *ngIf="uploadingState?.isUploading">
+      <p>Uploading: {{ uploadingState?.isUploading }}</p>
+      <p>Progress: {{ uploadingState?.progress }}%</p>
+      <p *ngIf="uploadingState?.error">error: {{ uploadingState?.error }}</p>
+    </div>
+    <div class="success" *ngIf="uploadingState?.success">
+      <h3>Success!</h3>
+    </div>
+    <div class="error" *ngIf="uploadingState?.error && uploadingState.success != true">
+      <h3>That went shit somehow, mate. Sorry.</h3>
+    </div>
+  </div>
+</div>

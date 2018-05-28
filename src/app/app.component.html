@@ -9,23 +9,24 @@
     <p>#WIN_BOX</p>
   </header>
 
-  <nav 
+  <nav
     *ngIf="toggleMenu"
     id="navigation">
-    <i 
+    <i
 
       (click)="toggleMenu = !toggleMenu"
       class="fas fa-times"></i>
     <p>#Files</p>
     <ul>
-      <li routerLink="main">#My Files</li>
+      <li routerLink="main" (click)="changeLocation('root')">#My Files</li>
       <li routerLink="starred">#Favourites</li>
       <li>#Sharing</li>
       <li>#File Requests</li>
       <li>#Deleted Files</li>
     </ul>
     <div id="nav-bottom">
-        <div id="nav-button"><a href="">#Log_Out</a></div>
+        <div class="nav-button">
+          <a (click)="logout()">#Log_Out</a></div>
         <div id="nav-info">
             <div>Info</div>
             <div>Contact</div>
@@ -40,6 +41,6 @@
     </div>
   </section>
   <div class="sidebar">
-    SHIT TO THE RIGHT.
+    <upload-box></upload-box>
   </div>
 </div>

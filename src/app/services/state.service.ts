@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import Action from '../interfaces/IActions';
 import { DropboxService } from './dropbox.service';
 import Manager from './statemanager';
 
@@ -17,7 +18,7 @@ export class StateService {
     });
     // vi ger Manager en funktion som uppdaterar alla våra subscribers, så att
     // Manager kan uppdatera när den vet att det behövs, istället.
-   }
+  }
 
   runAction(action: ActionType, args) {
     switch (action) {
@@ -33,7 +34,6 @@ export class StateService {
       case ActionType.RemoveStar:
         new RemoveStar().run(args);
         break;
-
       case ActionType.AddUserDetails:
         new AddUserDetails().run(args);
         break;
@@ -50,15 +50,25 @@ export class StateService {
   updateSubscribers() {
     this.subject.next(Manager.state);
   }
+
+  logout() {
+    new Logout(this.dropbox).run();
+    this.updateSubscribers();
+  }
 }
 
-interface Action {
-  run(params?: any[]);
+export enum ActionType {
+  GetFileListing,
+  ChangeLocation,
+  AddStar,
+  RemoveStar,
+  AddUserDetails
 }
 
+// can we move this elsewhere somehow, without fucking up everything?
+// No.
 class GetFileListing implements Action {
   constructor(private dropbox: DropboxService) { }
-
   run(location) {
     this.dropbox.getFileList(location)
       .pipe(
@@ -66,11 +76,31 @@ class GetFileListing implements Action {
       )
       .subscribe(res => {
         Manager.invokeStatehandler('FileList', location, res);
+        Manager.invokeStatehandler('ErrorMessage', ''); // set error message to empty string if request didn't throw
       }, err => {
-        const msg = `Status: ${err.status}, ${err.statusText}`;
-        Manager.invokeStatehandler('ErrorMessage', msg);
+        this.errorHandler(err);
       });
+  }
 
+  errorHandler(e) {
+    const { status } = e;
+    let message;
+    switch (status) {
+      case 400:
+        message = `Bad Request (Status code ${status})`;
+        break;
+      case 401:
+        message = `You will need to re-authorize to continue using this service. (Status code ${status}`;
+        this.dropbox.revokeToken();
+        break;
+      case 409:
+        message = `The resource you requested couldn't be found at this location. (Status code ${status})`;
+        break;
+      // remove stars here, when everything is fixed.
+      default:
+        message = 'Fuck if I know, boi.';
+    }
+    Manager.invokeStatehandler('ErrorMessage', message);
   }
 }
 
@@ -97,10 +127,11 @@ class AddUserDetails implements Action {
     Manager.invokeStatehandler('AddUserDetails', userdetails);
   }
 }
-export enum ActionType {
-  GetFileListing,
-  ChangeLocation,
-  AddStar,
-  RemoveStar,
-  AddUserDetails
+
+class Logout implements Action {
+  constructor(private dropbox: DropboxService) { }
+  run() {
+    this.dropbox.revokeToken();
+    Manager.invokeStatehandler('Logout');
+  }
 }

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DropboxService } from '../services/dropbox.service';
 import { StateService } from '../services/state.service';
 import { DropboxService } from '../services/dropbox.service';
 
@@ -20,12 +21,11 @@ export class FileComponent implements OnInit {
   starredItems;
   tagged;
   thumbnailLink;
-
   constructor(private route: ActivatedRoute, private state: StateService, private dropbox: DropboxService) { }
 
   ngOnInit() {
     this.state.getFromState('starredItems')
-      .subscribe(starred => this.starredItems = starred)
+      .subscribe(starred => this.starredItems = starred);
 
     this.starTest(this.file);
   

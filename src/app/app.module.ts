@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { FileListComponent } from './file-list/file-list.component';
 import { FileComponent } from './file/file.component';
 import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
 import { MainViewComponent } from './main-view/main-view.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
@@ -16,16 +17,19 @@ import { SizePipe } from './size.pipe';
 import { StarredItemsComponent } from './starred-items/starred-items.component';
 import { SuccessComponent } from './success/success.component';
 import { TestComponentComponent } from './test-component/test-component.component';
+import { UploadBoxComponent } from './upload-box/upload-box.component';
+import { UploadService } from './upload-box/upload.service';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 const appRoutes: Routes = [
-  { path: '',         redirectTo: 'main', pathMatch: 'full' },
-  { path: 'test',     component: TestComponentComponent},
-  { path: 'main',     component: MainViewComponent, canActivate: [AuthGuard]},
-  { path: 'starred',  component: StarredItemsComponent, canActivate: [AuthGuard]},
-  { path: 'login',    component: LoginComponent },
-  { path: 'success',  component: SuccessComponent},
-  { path: '**',       component: PageNotFoundComponent}
+  { path: '', redirectTo: 'main', pathMatch: 'full' },
+  { path: 'test', component: TestComponentComponent },
+  { path: 'main', component: MainViewComponent, canActivate: [AuthGuard] },
+  { path: 'starred', component: StarredItemsComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'login/:thanks', component: LoginComponent },
+  { path: 'success', component: SuccessComponent },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
@@ -40,14 +44,16 @@ const appRoutes: Routes = [
     FileComponent,
     SizePipe,
     TestComponentComponent,
-    StarredItemsComponent
+    StarredItemsComponent,
+    LogoutComponent,
+    UploadBoxComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: false }),
+    RouterModule.forRoot(appRoutes, { enableTracing: true }),
   ],
-  providers: [DropboxService, StateService, {
+  providers: [UploadService, DropboxService, StateService, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptorService,
     multi: true
