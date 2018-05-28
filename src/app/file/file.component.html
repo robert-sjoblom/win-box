@@ -5,7 +5,13 @@
     <div *ngIf="file['.tag'] == 'folder'">
       <i class="fas fa-folder-open"></i>
     </div>
-    <div *ngIf="file['.tag'] == 'file'">
+    
+    <div
+      [id]="file.id"
+    >
+    </div>
+
+    <div *ngIf="file['.tag'] == 'file' && !thumbnailLink">
         <i class="far fa-file-alt"></i>
     </div>
   </div>
@@ -37,4 +43,9 @@
         
         ></i></a>
   </div>
+  
+</div>
+
+<div id="test">
+
 </div>

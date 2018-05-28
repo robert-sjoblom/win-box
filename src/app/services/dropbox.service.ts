@@ -31,6 +31,13 @@ export class DropboxService {
     return this.http.post(`${this.apiUrl}list_folder`, body);
   }
 
+  thumbnail(file){
+    let test = {
+      path: file,
+    }
+    return this.dropboxClient.filesGetThumbnail(test)
+  }
+  
   download(file): any{
     if(file['.tag'] === 'folder'){
       
@@ -41,7 +48,6 @@ export class DropboxService {
       //     'Dropbox-API-Arg': '{"path":"/React"}' 
       //   })
       // })
-        
   
     } else {
       return this.dropboxClient.filesGetTemporaryLink({path: file.path_lower})

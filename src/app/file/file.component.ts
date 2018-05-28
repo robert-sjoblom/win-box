@@ -19,6 +19,8 @@ export class FileComponent implements OnInit {
 
   starredItems;
   tagged;
+  thumbnailLink
+
   constructor(private route: ActivatedRoute, private state: StateService, private dropbox: DropboxService) { }
 
   ngOnInit() {
@@ -26,6 +28,10 @@ export class FileComponent implements OnInit {
       .subscribe(starred => this.starredItems = starred)
 
     this.starTest(this.file);
+  
+    if(this.file.name.endsWith('jpg') || this.file.name.endsWith('pdf') || this.file.name.endsWith('jpeg')){
+      this.thumbnail(this.file.path_lower);
+    }
   }
 
   starTest(file) {
@@ -41,6 +47,18 @@ export class FileComponent implements OnInit {
   }
   changeStar(file) {
     this.fileObject.emit(this.file);
+  }
+  thumbnail(path){
+    this.dropbox.thumbnail(path)
+      .then(res => {
+        let url = URL.createObjectURL(res.fileBlob);
+        let img = document.createElement('img');
+        img.src = url;
+        console.log(img);
+        this.thumbnailLink = true;
+        document.getElementById(this.file.id).appendChild(img);
+      })
+      .catch(error => console.log(error))
   }
 
   downloadFile(file){
