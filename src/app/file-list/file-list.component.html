@@ -1,5 +1,5 @@
 <div id="breadcrumbs">
-  <p>{{location}}</p>
+  <breadcrumbs></breadcrumbs>
 </div>
 <div id="titles">
     <div id="title-icon"></div>
@@ -12,7 +12,7 @@
 <div id="wrapper-list">
   <file
     *ngFor="let file of filelist"
-    [file]="file" 
+    [file]="file"
     (pathObject)="changeLocation($event)"
     (fileObject)="changeStar($event)"
   ></file>

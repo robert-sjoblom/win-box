@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { FileListComponent } from './file-list/file-list.component';
 import { FileComponent } from './file/file.component';
 import { LoginComponent } from './login/login.component';
@@ -46,12 +47,13 @@ const appRoutes: Routes = [
     TestComponentComponent,
     StarredItemsComponent,
     LogoutComponent,
-    UploadBoxComponent
+    UploadBoxComponent,
+    BreadcrumbsComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true }),
+    RouterModule.forRoot(appRoutes, { enableTracing: false }),
   ],
   providers: [UploadService, DropboxService, StateService, {
     provide: HTTP_INTERCEPTORS,

@@ -1,0 +1,12 @@
+<div class="breadcrumb">
+  <a (click)="changePath('root')"><i class="fas fa-home"></i></a> >
+</div>
+
+<div class="breadcrumb" *ngFor="let entry of breadcrumbs">
+  <a (click)="changePath(entry[key])" *ngFor="let key of objectKeys(entry)">
+    {{key}}</a> >
+</div>
+
+<div class="breadcrumb">
+  <a (click)="goUp()"><i class="fas fa-angle-up"></i></a>
+</div>
