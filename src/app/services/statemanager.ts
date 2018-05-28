@@ -2,7 +2,14 @@ import { IUserDetails } from '../interfaces/IUserDetails';
 
 class Manager {
   private updater;
-  private _state: { Location: string; FileList: {}; userDetails: IUserDetails; starredItems: any[]; errorMessage: string; };
+  private _state: {
+    Location: string;
+    FileList: {};
+    userDetails: IUserDetails;
+    starredItems: any[];
+    errorMessage: string;
+    breadcrumbs: string[];
+  };
 
   constructor() {
     this._state = {
@@ -11,6 +18,7 @@ class Manager {
       userDetails: {},
       starredItems: [],
       errorMessage: '',
+      breadcrumbs: [],
     };
 
     if (localStorage.getItem('win-box') !== null) {
@@ -28,8 +36,19 @@ class Manager {
       };
     },
     'Location': ([location]) => {
+      let breadcrumbs;
+      if (location === 'root') {
+        breadcrumbs = [];
+      } else if (this.state.breadcrumbs.includes(location)) {
+        breadcrumbs = this.state.breadcrumbs.slice(0, this.state.breadcrumbs.indexOf(location) + 1);
+      } else {
+        breadcrumbs = [...this.state.breadcrumbs, location];
+      }
+
       this._state = {
-        ...this._state, Location: location
+        ...this._state,
+        breadcrumbs,
+        Location: location,
       };
     },
     'AddStar': ([file]) => {
