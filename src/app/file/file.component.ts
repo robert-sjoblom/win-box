@@ -19,7 +19,7 @@ export class FileComponent implements OnInit {
 
   starredItems;
   tagged;
-  thumbnailLink
+  thumbnailLink;
 
   constructor(private route: ActivatedRoute, private state: StateService, private dropbox: DropboxService) { }
 
