@@ -68,6 +68,7 @@ export class FileComponent implements OnInit {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-      });
+      })
+      .catch(err => console.log(err));
   }
 }
