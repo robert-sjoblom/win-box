@@ -7,8 +7,8 @@ class Manager {
     FileList: {};
     userDetails: IUserDetails;
     starredItems: any[];
-    errorMessage: string;
     breadcrumbs: string[];
+    error?: string;
   };
 
   constructor() {
@@ -17,7 +17,6 @@ class Manager {
       FileList: {},
       userDetails: {},
       starredItems: [],
-      errorMessage: '',
       breadcrumbs: [],
     };
 
@@ -70,12 +69,6 @@ class Manager {
       this._state = {
         ...this.state,
         userDetails
-      };
-    },
-    'ErrorMessage': ([errorMessage]) => {
-      this._state = {
-        ...this._state,
-        errorMessage
       };
     },
     'Logout': () => {

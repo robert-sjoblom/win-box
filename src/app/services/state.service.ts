@@ -23,7 +23,7 @@ export class StateService {
   runAction(action: ActionType, args) {
     switch (action) {
       case ActionType.GetFileListing:
-        return new GetFileListing(this.dropbox).run(args);
+        return new GetFileListing(this.dropbox, this.updateSubscribersWithError).run(args);
       case ActionType.ChangeLocation:
         return new ChangeLocation().run(args);
       case ActionType.AddStar:
@@ -38,12 +38,24 @@ export class StateService {
   getFromState(key) { // key är vilken nyckel vi vill ha
     return this.subject.asObservable()
       .pipe(
-        map(state => state[key])
-      );
+        map(state => {
+          let obj;
+          if (state.error) {
+            obj = {...state[key], error : state.error };
+          } else {
+            obj = state[key];
+          }
+          return obj;
+        }));
   }
 
   updateSubscribers() {
     this.subject.next(Manager.state);
+  }
+
+  updateSubscribersWithError = (err) => {
+    // this.updateSubscribers();
+    this.subject.next({...Manager.state, error : err});
   }
 
   logout() {
@@ -63,15 +75,18 @@ export enum ActionType {
 // can we move this elsewhere somehow, without fucking up everything?
 // No.
 class GetFileListing implements Action {
-  constructor(private dropbox: DropboxService) { }
+  constructor(private dropbox: DropboxService, private updateWithError) { }
   run(location) {
     return this.dropbox.getFileList(location)
       .pipe(
-        map(res => {
-          Manager.invokeStatehandler('FileList', location, res.entries);
+        map((res: any) => {
+          return res.entries;
         }),
-        catchError(this.errorHandler)
-      );
+        catchError(err => Observable.throw(err))
+      ).subscribe(
+          (res) => Manager.invokeStatehandler('FileList', location, res),
+          error => this.updateWithError(this.errorHandler(error)));
+
   }
 
   errorHandler(e) {
@@ -90,9 +105,9 @@ class GetFileListing implements Action {
         break;
       // remove stars here, when everything is fixed.
       default:
-        message = 'Fuck if I know, boi.';
+        message = 'Fuck if I know, boi!';
     }
-    return Observable.throw(message);
+    return message;
   }
 }
 

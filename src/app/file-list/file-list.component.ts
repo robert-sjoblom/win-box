@@ -8,7 +8,7 @@ import { ActionType, StateService } from '../services/state.service';
   styleUrls: ['./file-list.component.css']
 })
 export class FileListComponent implements OnInit {
-
+  error;
   filelist;
   location;
   starredItems;
@@ -17,21 +17,27 @@ export class FileListComponent implements OnInit {
 
   ngOnInit() {
     this.state.getFromState('Location')
-      .subscribe(location => this.location = location);
+      .subscribe(location => this.location = location, err => console.log(err));
 
     this.state.getFromState('FileList')
-      .subscribe(filelist => this.filelist = filelist[this.location],
-        /* errorCallback */);
+      .subscribe(filelist => {
+        if (filelist.error) {
+          this.error = filelist.error;
+        } else {
+          this.error = null;
+          this.filelist = filelist[this.location];
+        }
+      });
 
     this.state.getFromState('starredItems')
-      .subscribe(starredItems => this.starredItems = starredItems);
+      .subscribe(starredItems => this.starredItems = starredItems, err => console.log(err));
 
     this.state.runAction(ActionType.GetFileListing, this.location);
   }
 
   changeLocation(location) {
     this.state.runAction(ActionType.ChangeLocation, location);
-    this.state.runAction(ActionType.GetFileListing, this.location);
+    this.state.runAction(ActionType.GetFileListing, location);
   }
   changeStar(file) {
     if (this.starredItems.some(starred => starred.id === file.id)) {
