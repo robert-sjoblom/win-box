@@ -3,13 +3,16 @@
     <input 
       type="text" 
       placeholder="Search..."
+      #input
       (keyup)="onChangeSearch($event.target.value)"
+      (focusout)="results = []"
       /><span> </span>
   </div>
 </div>
-<div *ngIf="results" id="search-wrapper">
+<div *ngIf="results.length > 0" id="search-wrapper">
   <file
-   *ngFor="let result of results"
-   [file]="result"
+    *ngFor="let result of results"
+    [file]="result"
+    (pathObject)="changeLocation($event)"
   ></file>
  </div>

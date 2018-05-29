@@ -33,7 +33,9 @@
     padding: 15px;
     width: 50%;
     position: absolute;
-    background-color: aquamarine;
+    background-color: #333333;
+    border-radius: 10px;
+    color: white;
     z-index: 99;
     right: 0;
 }
