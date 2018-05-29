@@ -16,6 +16,13 @@
     border-bottom: 1px solid #444444;
 }
 
+.error {
+  width: 300px;
+}
+
+.house {
+  cursor: pointer;
+}
 #title-icon{
     width: 100%;
     text-align: left;

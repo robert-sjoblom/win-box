@@ -1,19 +1,23 @@
 <div id="breadcrumbs">
   <breadcrumbs></breadcrumbs>
 </div>
-<div id="titles">
+<div *ngIf="!error">
+  <div id="titles">
     <div id="title-icon"></div>
     <div id="title-name">Name</div>
     <div id="title-size">Size</div>
     <div id="title-time">Last Modified</div>
     <div id="title-download">Download</div>
+  </div>
+
+  <div id="wrapper-list">
+    <file *ngFor="let file of filelist" [file]="file" (pathObject)="changeLocation($event)" (fileObject)="changeStar($event)"></file>
+  </div>
 </div>
 
-<div id="wrapper-list">
-  <file
-    *ngFor="let file of filelist"
-    [file]="file"
-    (pathObject)="changeLocation($event)"
-    (fileObject)="changeStar($event)"
-  ></file>
+<div *ngIf="error" class="error">
+  <p>An error occurred: {{error}}</p>
+  <p>Sometimes, logging in and out helps.</p>
+  <p>But you can also try and go back <a class="house" (click)="changeLocation('root')"><i class="fas fa-home"></i></a></p>
+  <logout></logout>
 </div>
