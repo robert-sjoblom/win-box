@@ -21,6 +21,7 @@ import { TestComponentComponent } from './test-component/test-component.componen
 import { UploadBoxComponent } from './upload-box/upload-box.component';
 import { UploadService } from './upload-box/upload.service';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { SearchComponent } from './search/search.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
@@ -48,7 +49,8 @@ const appRoutes: Routes = [
     StarredItemsComponent,
     LogoutComponent,
     UploadBoxComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
