@@ -1,5 +1,6 @@
 <div
-  id="file-wrapper"
+  class="file-wrapper"
+  [class.search]="file.search"
 >
   <div id="icon">
     <div *ngIf="file['.tag'] == 'folder'">
@@ -27,10 +28,10 @@
       ></i>
 
   </div>
-  <div id="size">
+  <div *ngIf="!file.search" id="size">
     {{file.size | size}}
   </div>
-  <div id="time-stamp">
+  <div *ngIf="!file.search" id="time-stamp">
     {{file.client_modified | date:'fullDate':''}}
   </div>
   <div id="download">

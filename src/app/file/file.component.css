@@ -1,10 +1,12 @@
-#file-wrapper{
+.file-wrapper{
     margin: 0 auto;
     display: grid;
     grid-template-columns: 6% 48% 15% 20% 10%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #c4c3c3
+    border-bottom: 1px solid #c4c3c3;
+    height: 64px;
+}
+.search{
+    grid-template-columns: 6% 49% 45% ;
 }
 .fa-file-alt{
     font-size: 30px;
@@ -17,7 +19,7 @@
     padding-bottom: 5px;
 }
 #name, #size, #time-stamp{
-    font-size: 19px;
+    font-size: 22px;
     font-weight: 20px;
 }
 #icon{
@@ -27,10 +29,14 @@
 }
 
 #name{
+    background-color: blue;
     width: 100%;
     text-align: left;
     grid-column: 2/3;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 #name:hover{
     text-decoration: underline;
