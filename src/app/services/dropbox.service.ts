@@ -31,10 +31,10 @@ export class DropboxService {
     return this.http.post(`${this.apiUrl}files/list_folder`, body);
   }
 
-  download(path): any {
+  download(file): any {
     const token = Manager.state.userDetails.access_token;
     this.dropboxClient.setAccessToken(token);
-      return this.dropboxClient.filesGetTemporaryLink({ path });
+    return this.dropboxClient.filesGetTemporaryLink({ path: file.path_lower });
   }
 
   upload(file, writeState, updateSubscribers) {
@@ -44,11 +44,11 @@ export class DropboxService {
     const prefix = (Manager.state.Location === 'root' ? '' : Manager.state.Location);
     const path = `${prefix}/${file.name}`;
 
-    xhr.upload.onprogress = function(evt) {
+    xhr.upload.onprogress = function (evt) {
       writeState(evt, 'no', 'no');
     };
 
-    xhr.onload = function() {
+    xhr.onload = function () {
       if (xhr.status === 200) {
         const fileInfo = JSON.parse(xhr.response);
         writeState('onload', 'success');
@@ -74,29 +74,12 @@ export class DropboxService {
     xhr.send(file);
   }
 
-  thumbnail(file){
-    let test = {
+  thumbnail(file) {
+    const token = Manager.state.userDetails.access_token;
+    this.dropboxClient.setAccessToken(token);
+    const data = {
       path: file,
-    }
-    return this.dropboxClient.filesGetThumbnail(test)
+    };
+    return this.dropboxClient.filesGetThumbnail(data);
   }
-  
-  download(file): any{
-    if(file['.tag'] === 'folder'){
-      
-      // return fetch('https://content.dropboxapi.com/2/files/download_zip', {
-      //   method: 'POST',
-      //   headers: new Headers({
-      //     'Authorization': 'Bearer l4k0M7CsrbAAAAAAAAAAOMmP5G9iaeBBAaGQe8k8qwWxJQsvJCMQkFIYMwXms6fo',
-      //     'Dropbox-API-Arg': '{"path":"/React"}' 
-      //   })
-      // })
-  
-    } else {
-      return this.dropboxClient.filesGetTemporaryLink({path: file.path_lower})
-    
-    }
-    
-    
-  } 
 }
