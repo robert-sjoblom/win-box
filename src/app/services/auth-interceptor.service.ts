@@ -11,7 +11,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(private state: StateService) {
     this.state.getFromState('userDetails')
-      .subscribe(userDetails => this.token = userDetails.access_token);
+      .subscribe(userDetails => this.token = userDetails.access_token, err => console.log('interceptor ', err));
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

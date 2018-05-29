@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import Action from '../interfaces/IActions';
 import { DropboxService } from './dropbox.service';
 import Manager from './statemanager';
@@ -23,32 +23,39 @@ export class StateService {
   runAction(action: ActionType, args) {
     switch (action) {
       case ActionType.GetFileListing:
-        new GetFileListing(this.dropbox).run(args);
-        break;
+        return new GetFileListing(this.dropbox, this.updateSubscribersWithError).run(args);
       case ActionType.ChangeLocation:
-        new ChangeLocation().run(args);
-        break;
+        return new ChangeLocation().run(args);
       case ActionType.AddStar:
-        new AddStar().run(args);
-        break;
+        return new AddStar().run(args);
       case ActionType.RemoveStar:
-        new RemoveStar().run(args);
-        break;
+        return new RemoveStar().run(args);
       case ActionType.AddUserDetails:
-        new AddUserDetails().run(args);
-        break;
+        return new AddUserDetails().run(args);
     }
   }
 
   getFromState(key) { // key är vilken nyckel vi vill ha
     return this.subject.asObservable()
       .pipe(
-        map(state => state[key])
-      );
+        map(state => {
+          let obj;
+          if (state.error) {
+            obj = {...state[key], error : state.error };
+          } else {
+            obj = state[key];
+          }
+          return obj;
+        }));
   }
 
   updateSubscribers() {
     this.subject.next(Manager.state);
+  }
+
+  updateSubscribersWithError = (err) => {
+    // this.updateSubscribers();
+    this.subject.next({...Manager.state, error : err});
   }
 
   logout() {
@@ -68,18 +75,18 @@ export enum ActionType {
 // can we move this elsewhere somehow, without fucking up everything?
 // No.
 class GetFileListing implements Action {
-  constructor(private dropbox: DropboxService) { }
+  constructor(private dropbox: DropboxService, private updateWithError) { }
   run(location) {
-    this.dropbox.getFileList(location)
+    return this.dropbox.getFileList(location)
       .pipe(
-        map(res => res.entries)
-      )
-      .subscribe(res => {
-        Manager.invokeStatehandler('FileList', location, res);
-        Manager.invokeStatehandler('ErrorMessage', ''); // set error message to empty string if request didn't throw
-      }, err => {
-        this.errorHandler(err);
-      });
+        map((res: any) => {
+          return res.entries;
+        }),
+        catchError(err => Observable.throw(err))
+      ).subscribe(
+          (res) => Manager.invokeStatehandler('FileList', location, res),
+          error => this.updateWithError(this.errorHandler(error)));
+
   }
 
   errorHandler(e) {
@@ -98,9 +105,9 @@ class GetFileListing implements Action {
         break;
       // remove stars here, when everything is fixed.
       default:
-        message = 'Fuck if I know, boi.';
+        message = 'Fuck if I know, boi!';
     }
-    Manager.invokeStatehandler('ErrorMessage', message);
+    return message;
   }
 }
 
