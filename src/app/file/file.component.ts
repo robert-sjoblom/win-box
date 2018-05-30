@@ -52,11 +52,13 @@ export class FileComponent implements OnInit {
         const url = URL.createObjectURL(res.fileBlob);
         const img = document.createElement('img');
         img.src = url;
-        img.setAttribute('class', 'wow');
         this.thumbnailLink = true;
         document.getElementById(this.file.id).appendChild(img);
-      })
-      .catch(error => console.log(error));
+        img.style.width = '38px'
+        img.style.height = '38px'
+        img.style.paddingTop = '15px'
+      }).catch(err => console.log(err))
+
   }
 
   downloadFile(file) {

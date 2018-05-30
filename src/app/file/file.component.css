@@ -1,25 +1,35 @@
 .file-wrapper{
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 6% 48% 15% 20% 10%;
+    grid-template-columns: 6% 44% 15% 24% 10%;
     border-bottom: 1px solid #c4c3c3;
     height: 64px;
 }
 .search{
     grid-template-columns: 6% 49% 45% ;
+    font-size: 15px;
+    vertical-align: middle;
 }
+
 .fa-file-alt{
-    font-size: 30px;
-    padding-bottom: 5px;
+    padding-top: 15px;
+    font-size: 35px;
+
     color: rgb(52, 128, 204);
+    text-align: left;
+    width: 100%;
 }
 .fa-folder-open{
-    font-size: 30px;
+    padding-top: 15px;
+    width: 100%;
+    text-align: left;
+    font-size: 35px;
     color: rgb(52, 128, 204);
-    padding-bottom: 5px;
+    
 }
 #name, #size, #time-stamp{
-    font-size: 22px;
+    padding-top: 20px;
+    font-size: 20px;
     font-weight: 20px;
 }
 #icon{
@@ -29,15 +39,12 @@
 }
 
 #name{
-    background-color: blue;
     width: 100%;
     text-align: left;
     grid-column: 2/3;
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
+
 #name:hover{
     text-decoration: underline;
 }
@@ -69,7 +76,8 @@
 }
 
 .fa-download{
-    font-size: 22px;
+    padding-top: 15px;
+    font-size: 25px;
     color: rgb(52, 128, 204);   
     cursor: pointer;
 }
