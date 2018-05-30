@@ -10,7 +10,7 @@
 #titles{
     width: 95%;
     display: grid;
-    grid-template-columns: 6% 48% 15% 20% 10%;
+    grid-template-columns: 6% 44% 15% 24% 10%;
     margin-bottom: 10px;
     padding-bottom: 15px;
     border-bottom: 1px solid #444444;

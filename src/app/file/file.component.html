@@ -22,6 +22,7 @@
     <a (click)="changeLocation(file.path_lower)">{{file.name}}</a>
 
     <i
+      *ngIf="!file.search"
       class="far fa-star"
       (click)="changeStar(file); starTest(file);"
       [ngClass]="{'bold' : tagged}"
