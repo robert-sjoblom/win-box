@@ -8,6 +8,7 @@ class Manager {
     userDetails: IUserDetails;
     starredItems: any[];
     breadcrumbs: string[];
+    searchResult: any[]
     error?: string;
   };
 
@@ -18,6 +19,7 @@ class Manager {
       userDetails: {},
       starredItems: [],
       breadcrumbs: [],
+      searchResult: []
     };
 
     if (localStorage.getItem('win-box') !== null) {
@@ -74,6 +76,12 @@ class Manager {
     'Logout': () => {
       this.removeStateFromStorage();
       this.constructor(); // resets state.
+    },
+    'SearchResult': ([searchResult]) => {
+      this._state = {
+        ...this.state,
+        searchResult
+      }
     }
   };
 

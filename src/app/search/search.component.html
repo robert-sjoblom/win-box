@@ -5,7 +5,7 @@
       placeholder="Search..."
       #input
       (keyup)="onChangeSearch($event.target.value)"
-      (focusout)="results = []"
+      (focusout)="setTime()"
       /><span> </span>
   </div>
 </div>
@@ -15,4 +15,4 @@
     [file]="result"
     (pathObject)="changeLocation($event)"
   ></file>
- </div>
+</div>
