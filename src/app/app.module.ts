@@ -2,6 +2,11 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
+// the following three lines handle various firebase functionality
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { environment } from '../environments/environment';
+// back to your regularly scheduled entertainment
 import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { FileListComponent } from './file-list/file-list.component';
@@ -13,6 +18,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { DropboxService } from './services/dropbox.service';
+import { NotificationService } from './services/notification.service';
 import { StateService } from './services/state.service';
 import { SizePipe } from './size.pipe';
 import { StarredItemsComponent } from './starred-items/starred-items.component';
@@ -21,6 +27,14 @@ import { TestComponentComponent } from './test-component/test-component.componen
 import { UploadBoxComponent } from './upload-box/upload-box.component';
 import { UploadService } from './upload-box/upload.service';
 import { WelcomeComponent } from './welcome/welcome.component';
+
+
+
+
+
+
+
+
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
@@ -53,13 +67,21 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
     RouterModule.forRoot(appRoutes, { enableTracing: false }),
   ],
-  providers: [UploadService, DropboxService, StateService, {
+  providers: [
+    UploadService,
+    DropboxService,
+    StateService,
+    NotificationService,
+    {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptorService,
     multi: true
-  }],
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
