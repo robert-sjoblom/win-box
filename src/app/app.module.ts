@@ -22,12 +22,14 @@ import { UploadBoxComponent } from './upload-box/upload-box.component';
 import { UploadService } from './upload-box/upload.service';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SearchComponent } from './search/search.component';
+import { LatestsearchComponent } from './latestsearch/latestsearch.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
   { path: 'test', component: TestComponentComponent },
   { path: 'main', component: MainViewComponent, canActivate: [AuthGuard] },
   { path: 'starred', component: StarredItemsComponent, canActivate: [AuthGuard] },
+  { path: "latestSearch", component: LatestsearchComponent, canActivate: [AuthGuard]},  
   { path: 'login', component: LoginComponent },
   { path: 'login/:thanks', component: LoginComponent },
   { path: 'success', component: SuccessComponent },
@@ -50,7 +52,8 @@ const appRoutes: Routes = [
     LogoutComponent,
     UploadBoxComponent,
     BreadcrumbsComponent,
-    SearchComponent
+    SearchComponent,
+    LatestsearchComponent
   ],
   imports: [
     BrowserModule,

@@ -27,6 +27,7 @@ export class FileComponent implements OnInit {
       .subscribe(starred => this.starredItems = starred);
 
     this.starTest(this.file);
+    
     if (this.file.name.endsWith('jpg') || this.file.name.endsWith('pdf') || this.file.name.endsWith('jpeg')) {
       this.thumbnail(this.file.path_lower);
     }

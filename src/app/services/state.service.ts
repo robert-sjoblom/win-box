@@ -6,6 +6,7 @@ import { DropboxService } from './dropbox.service';
 import Manager from './statemanager';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,6 +33,8 @@ export class StateService {
         return new RemoveStar().run(args);
       case ActionType.AddUserDetails:
         return new AddUserDetails().run(args);
+      case ActionType.SaveSearch:
+        return new SaveSearchList().run(args);
     }
   }
 
@@ -69,7 +72,8 @@ export enum ActionType {
   ChangeLocation,
   AddStar,
   RemoveStar,
-  AddUserDetails
+  AddUserDetails,
+  SaveSearch
 }
 
 // can we move this elsewhere somehow, without fucking up everything?
@@ -86,7 +90,6 @@ class GetFileListing implements Action {
       ).subscribe(
           (res) => Manager.invokeStatehandler('FileList', location, res),
           error => this.updateWithError(this.errorHandler(error)));
-
   }
 
   errorHandler(e) {
@@ -132,6 +135,12 @@ class AddStar implements Action {
 class AddUserDetails implements Action {
   run(userdetails) {
     Manager.invokeStatehandler('AddUserDetails', userdetails);
+  }
+}
+class SaveSearchList implements Action {
+  run(searchList){
+    // search is OK from here
+    Manager.invokeStatehandler('SearchResult', searchList)
   }
 }
 

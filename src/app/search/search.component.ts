@@ -12,44 +12,51 @@ import { StateService, ActionType } from '../services/state.service';
 export class SearchComponent implements OnInit {
 
   results: string[] = [];
+  latestSearch:string[] = [];
+  toggle;
   stream = new Subject<string>(); 
+  
 
   constructor(private dropbox: DropboxService, private state: StateService) { }
 
   ngOnInit() {
     this.stream
-      .pipe(
-        debounceTime(400),
-        distinctUntilChanged(),
-        switchMap(query => this.dropbox.search(query))
+      .pipe( // Pipe subscribes to and observable or a promise.
+        debounceTime(400), // to not send multiple requests all the time
+        distinctUntilChanged(), // waits until the searchtext has changed
+        switchMap(query => this.dropbox.search(query)) // this sends the search request to dropbox.
       )
       .subscribe((results:any) => {
         if(results.length > 0){
 
-          //results should be saved in state before map
-          this.results = results.map(item => {
-            let obj = {
+          this.state.runAction(ActionType.SaveSearch, results)
+          let obj = results.map(item => {
+            return {
               ...item,
-              search: true
+              search:true
             }
-            console.log(obj)
-            return obj
           });
+          this.results = obj
+          console.log(obj, "from sub searchcomponent");
+          return obj;
         } else {
-          this.results = []
+          this.results = [];
         }
-        
-        
-        console.log(this.results)
       },
       err => console.log(err)
     )
+    this.state.getFromState('searchResult')
+      .subscribe(search => {
+        this.latestSearch = search;
+      });
   }
   changeLocation(location) {
     this.state.runAction(ActionType.ChangeLocation, location);
     this.state.runAction(ActionType.GetFileListing, location);
   }
-
+  setTime(){
+    setTimeout(()=> this.results = [], 200);
+  }
   onChangeSearch(value){
     this.stream.next(value)
   }
