@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { FirebaseApp } from 'angularfire2';
-import { StateService } from './state.service';
+import { ActionType, StateService } from './state.service';
 
 
 @Injectable({
@@ -9,7 +9,6 @@ import { StateService } from './state.service';
 export class NotificationService {
 
   userId: string;
-  notification;
 
   constructor(private state: StateService, @Inject(FirebaseApp) fb) {
     this.state.getFromState('userDetails').subscribe(res => {
@@ -18,7 +17,8 @@ export class NotificationService {
 
         const root = fb.database().ref(`notifications/${this.userId}/`);
         root.on('child_removed', snapshot => {
-          console.log('a child was killed'); // okay, here we tell state that some file changes have happened.
+          console.log('a child was created');
+          this.state.runAction(ActionType.UpdateFileListing, null);
         });
       }
     });
@@ -26,7 +26,6 @@ export class NotificationService {
 
   printStatus() {
     console.log(`Current Status:
-    userId: ${this.userId}
-    notification: ${this.notification}`);
+    userId: ${this.userId}`);
   }
 }

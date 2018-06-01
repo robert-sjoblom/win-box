@@ -32,6 +32,8 @@ export class StateService {
         return new RemoveStar().run(args);
       case ActionType.AddUserDetails:
         return new AddUserDetails().run(args);
+      case ActionType.UpdateFileListing:
+        return new UpdateFileListing(this.dropbox).run();
     }
   }
 
@@ -69,7 +71,8 @@ export enum ActionType {
   ChangeLocation,
   AddStar,
   RemoveStar,
-  AddUserDetails
+  AddUserDetails,
+  UpdateFileListing
 }
 
 // can we move this elsewhere somehow, without fucking up everything?
@@ -140,5 +143,15 @@ class Logout implements Action {
   run() {
     this.dropbox.revokeToken();
     Manager.invokeStatehandler('Logout');
+  }
+}
+
+class UpdateFileListing implements Action {
+  constructor(private dropbox: DropboxService) { }
+  run() {
+    console.log('UpdateFileListing ran!');
+    this.dropbox.updateFileListing();
+
+    // Manager.invokeStatehandler('UpdateFileListing');
   }
 }

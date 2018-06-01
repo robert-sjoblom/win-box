@@ -74,6 +74,10 @@ class Manager {
     'Logout': () => {
       this.removeStateFromStorage();
       this.constructor(); // resets state.
+    },
+    'UpdateFileListing': () => {
+      // we've received notification
+      return null;
     }
   };
 

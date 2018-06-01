@@ -82,4 +82,17 @@ export class DropboxService {
     };
     return this.dropboxClient.filesGetThumbnail(data);
   }
+
+  updateFileListing() {
+    const body = JSON.stringify({ path: '', recursive: false, include_deleted: true });
+    console.log('updateFileListing @ dropbox ran')
+
+    this.http.post(`${this.apiUrl}files/list_folder/get_latest_cursor`, body)
+      .subscribe(res => {
+        console.log('Im a cursor?: ', res);
+        this.http.post(`${this.apiUrl}files/list_folder/continue`, res)
+          .subscribe(changes => console.log('Im changes that has happened! ', changes));
+      });
+    ;
+  }
 }

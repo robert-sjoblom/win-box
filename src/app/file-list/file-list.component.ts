@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationService } from '../services/notification.service';
 import { ActionType, StateService } from '../services/state.service';
 
 
@@ -13,7 +14,10 @@ export class FileListComponent implements OnInit {
   location;
   starredItems;
 
-  constructor(private state: StateService) { }
+  constructor(
+    private state: StateService,
+    private notification: NotificationService
+  ) { }
 
   ngOnInit() {
     this.state.getFromState('Location')
