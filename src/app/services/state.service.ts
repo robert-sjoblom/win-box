@@ -72,7 +72,8 @@ export enum ActionType {
   AddStar,
   RemoveStar,
   AddUserDetails,
-  UpdateFileListing
+  UpdateFileListing,
+  GetLatestCursor
 }
 
 // can we move this elsewhere somehow, without fucking up everything?
@@ -83,13 +84,14 @@ class GetFileListing implements Action {
     return this.dropbox.getFileList(location)
       .pipe(
         map((res: any) => {
+          // Manager.invokeStatehandler('Cursor', res.cursor);
+          this.dropbox.setLatestCursor(location);
           return res.entries;
         }),
         catchError(err => Observable.throw(err))
       ).subscribe(
           (res) => Manager.invokeStatehandler('FileList', location, res),
           error => this.updateWithError(this.errorHandler(error)));
-
   }
 
   errorHandler(e) {
@@ -146,12 +148,15 @@ class Logout implements Action {
   }
 }
 
+
+
 class UpdateFileListing implements Action {
   constructor(private dropbox: DropboxService) { }
   run() {
-    console.log('UpdateFileListing ran!');
-    this.dropbox.updateFileListing();
-
-    // Manager.invokeStatehandler('UpdateFileListing');
+    this.dropbox.updateFileListing()
+      .subscribe(changes => {
+        Manager.invokeStatehandler('UpdateFileListing', changes);
+      })
+    ;
   }
 }

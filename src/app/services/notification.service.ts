@@ -9,19 +9,22 @@ import { ActionType, StateService } from './state.service';
 export class NotificationService {
 
   userId: string;
+  root;
 
   constructor(private state: StateService, @Inject(FirebaseApp) fb) {
     this.state.getFromState('userDetails').subscribe(res => {
       this.userId = res.account_id;
       if (this.userId !== undefined) {
-
-        const root = fb.database().ref(`notifications/${this.userId}/`);
-        root.on('child_removed', snapshot => {
-          console.log('a child was created');
-          this.state.runAction(ActionType.UpdateFileListing, null);
-        });
+        this.root = fb.database().ref(`notifications/${this.userId}/`);
       }
     });
+
+    this.root.set({ listening: true });
+    this.root.on('child_removed', snapshot => {
+      console.log('a child was added');
+      this.state.runAction(ActionType.UpdateFileListing, null);
+    });
+
   }
 
   printStatus() {

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Dropbox } from 'dropbox/src';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import Manager from './statemanager';
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,9 @@ export class DropboxService {
   authUrl = this.dropboxClient.getAuthenticationUrl(this.redirect, 'fly, you fools!', 'token');
   apiUrl = 'https://api.dropboxapi.com/2/';
 
-  constructor(private http: HttpClient) {
-  }
+  latestCursor;
+
+  constructor(private http: HttpClient) { }
 
   url() {
     return this.authUrl;
@@ -29,6 +31,24 @@ export class DropboxService {
     const body = {};
     body['path'] = (location === 'root') ? '' : location;
     return this.http.post(`${this.apiUrl}files/list_folder`, body);
+  }
+
+  setLatestCursor(location) {
+    const path = (location === 'root') ? '' : location;
+    const body = JSON.stringify({ path, recursive: false, include_deleted: true });
+    console.log(body);
+    this.http.post(`${this.apiUrl}files/list_folder/get_latest_cursor`, body)
+      .subscribe((res: any) => {
+        console.log(res);
+        this.latestCursor = res.cursor;
+      });
+    // .subscribe((res: any) => {
+    //   console.log('this is my cursor: ', res.cursor);
+
+
+    //   // this.latestCursor = res.cursor;
+    //   // return true;
+    // });
   }
 
   download(file): any {
@@ -54,10 +74,7 @@ export class DropboxService {
         writeState('onload', 'success');
       } else {
         const errorMsg = xhr.response || 'Unable to upload file.';
-        console.log('got an error here boi', );
-        console.log(errorMsg);
-        writeState('onload', 'failure', errorMsg);
-        // something went wrong.
+        writeState('onload', 'failure', { file, errorMsg });
       }
     };
 
@@ -84,15 +101,10 @@ export class DropboxService {
   }
 
   updateFileListing() {
-    const body = JSON.stringify({ path: '', recursive: false, include_deleted: true });
-    console.log('updateFileListing @ dropbox ran')
-
-    this.http.post(`${this.apiUrl}files/list_folder/get_latest_cursor`, body)
-      .subscribe(res => {
-        console.log('Im a cursor?: ', res);
-        this.http.post(`${this.apiUrl}files/list_folder/continue`, res)
-          .subscribe(changes => console.log('Im changes that has happened! ', changes));
-      });
-    ;
+    const cursor = this.latestCursor;
+    return this.http.post(`${this.apiUrl}files/list_folder/continue`, { cursor })
+      .pipe(map((res: any) => {
+        return res.entries;
+      }));
   }
 }
