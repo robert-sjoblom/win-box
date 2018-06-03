@@ -21,6 +21,9 @@ export class NotificationService {
 
     this.root.set({ listening: true });
     this.root.on('child_removed', snapshot => {
+      /*
+        problem here: this shouldn't fire again until we've gotten a new cursor.
+      */
       console.log('a child was added');
       this.state.runAction(ActionType.UpdateFileListing, null);
     });

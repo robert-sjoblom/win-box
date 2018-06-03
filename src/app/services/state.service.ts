@@ -156,7 +156,6 @@ class UpdateFileListing implements Action {
     this.dropbox.updateFileListing()
       .subscribe(changes => {
         Manager.invokeStatehandler('UpdateFileListing', changes);
-      })
-    ;
+      }, null, () => this.dropbox.setLatestCursor(Manager.state.Location));
   }
 }
