@@ -26,7 +26,6 @@ import { SuccessComponent } from './success/success.component';
 import { TestComponentComponent } from './test-component/test-component.component';
 import { UploadBoxComponent } from './upload-box/upload-box.component';
 import { UploadService } from './upload-box/upload.service';
-import { WelcomeComponent } from './welcome/welcome.component';
 
 
 
@@ -51,7 +50,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     LoginComponent,
-    WelcomeComponent,
     SuccessComponent,
     MainViewComponent,
     PageNotFoundComponent,

@@ -10,8 +10,10 @@ export class NotificationService {
 
   userId: string;
   root;
+  update: boolean;
 
   constructor(private state: StateService, @Inject(FirebaseApp) fb) {
+    this.update = true;
     this.state.getFromState('userDetails').subscribe(res => {
       this.userId = res.account_id;
       if (this.userId !== undefined) {
@@ -21,17 +23,12 @@ export class NotificationService {
 
     this.root.set({ listening: true });
     this.root.on('child_removed', snapshot => {
-      /*
-        problem here: this shouldn't fire again until we've gotten a new cursor.
-      */
-      console.log('a child was added');
-      this.state.runAction(ActionType.UpdateFileListing, null);
+      if (this.update) {
+        this.update = false;
+        this.state.runAction(ActionType.UpdateFileListing, () => {
+          this.update = true;
+        });
+      }
     });
-
-  }
-
-  printStatus() {
-    console.log(`Current Status:
-    userId: ${this.userId}`);
   }
 }

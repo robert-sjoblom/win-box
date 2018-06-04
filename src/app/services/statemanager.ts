@@ -76,7 +76,6 @@ class Manager {
       this.constructor(); // resets state.
     },
     'UpdateFileListing': ([changes]) => {
-      console.log(changes);
       const location = this.state.Location;
       const filelist = changes.reduce((acc, cur) => {
         if (['folder', 'file'].includes(cur['.tag'])) { // we should add something

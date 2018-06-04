@@ -36,19 +36,10 @@ export class DropboxService {
   setLatestCursor(location) {
     const path = (location === 'root') ? '' : location;
     const body = JSON.stringify({ path, recursive: false, include_deleted: true });
-    console.log(body);
     this.http.post(`${this.apiUrl}files/list_folder/get_latest_cursor`, body)
       .subscribe((res: any) => {
-        console.log(res);
         this.latestCursor = res.cursor;
       });
-    // .subscribe((res: any) => {
-    //   console.log('this is my cursor: ', res.cursor);
-
-
-    //   // this.latestCursor = res.cursor;
-    //   // return true;
-    // });
   }
 
   download(file): any {

@@ -33,7 +33,7 @@ export class StateService {
       case ActionType.AddUserDetails:
         return new AddUserDetails().run(args);
       case ActionType.UpdateFileListing:
-        return new UpdateFileListing(this.dropbox).run();
+        return new UpdateFileListing(this.dropbox).run(args);
     }
   }
 
@@ -152,10 +152,13 @@ class Logout implements Action {
 
 class UpdateFileListing implements Action {
   constructor(private dropbox: DropboxService) { }
-  run() {
+  run(callbackFunc) {
+    // callbackFunc lets our notification service know we want to
+    // receive updates again.
     this.dropbox.updateFileListing()
       .subscribe(changes => {
+        this.dropbox.setLatestCursor(Manager.state.Location);
         Manager.invokeStatehandler('UpdateFileListing', changes);
-      }, null, () => this.dropbox.setLatestCursor(Manager.state.Location));
+      }, null, () => callbackFunc());
   }
 }

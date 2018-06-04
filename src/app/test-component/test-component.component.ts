@@ -12,8 +12,4 @@ export class TestComponentComponent implements OnInit {
   ngOnInit() {
 
   }
-  
-  fetchFirebase() {
-    this.notification.printStatus();
-  }
 }

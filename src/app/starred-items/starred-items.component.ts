@@ -9,7 +9,6 @@ import { ActionType, StateService } from '../services/state.service';
 })
 export class StarredItemsComponent implements OnInit {
   starredItems;
-
   constructor(private state: StateService) { }
 
   ngOnInit() {
