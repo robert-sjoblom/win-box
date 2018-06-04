@@ -23,9 +23,6 @@ export class AuthInterceptorService implements HttpInterceptor {
           'Authorization': `Bearer ${this.token}`
         }
       });
-    } else {
-      // when we're implementing firebase.
-      // is it pretty? no. is it any good? who knows.
     }
     return next.handle(req);
   }

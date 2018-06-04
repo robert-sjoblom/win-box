@@ -93,7 +93,7 @@ class Manager {
       this._state = {
         ...this.state,
         searchResult
-      }
+      };
     }
   };
 

@@ -27,7 +27,7 @@ export class FileComponent implements OnInit {
       .subscribe(starred => this.starredItems = starred);
 
     this.starTest(this.file);
-    
+
     if (this.file.name.endsWith('jpg') || this.file.name.endsWith('pdf') || this.file.name.endsWith('jpeg')) {
       this.thumbnail(this.file.path_lower);
     }
@@ -55,10 +55,10 @@ export class FileComponent implements OnInit {
         img.src = url;
         this.thumbnailLink = true;
         document.getElementById(this.file.id).appendChild(img);
-        img.style.width = '38px'
-        img.style.height = '38px'
-        img.style.paddingTop = '15px'
-      }).catch(err => console.log(err))
+        img.style.width = '38px';
+        img.style.height = '38px';
+        img.style.paddingTop = '15px';
+      }).catch(err => console.log(err));
 
   }
 

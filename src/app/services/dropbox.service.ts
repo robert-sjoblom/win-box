@@ -11,7 +11,7 @@ import Manager from './statemanager';
 })
 export class DropboxService {
   appKey = 'mkbet5s6hmzjcte';
-  redirect = 'http://localhost:4200/success';
+  redirect = 'https://win-box-db.firebaseapp.com/success';
   dropboxClient = new Dropbox({ clientId: this.appKey });
 
   authUrl = this.dropboxClient.getAuthenticationUrl(this.redirect, 'fly, you fools!', 'token');
