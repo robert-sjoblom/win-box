@@ -76,7 +76,7 @@ export enum ActionType {
   RemoveStar,
   AddUserDetails,
   UpdateFileListing,
-  GetLatestCursor
+  GetLatestCursor,
   SaveSearch
 }
 
@@ -144,9 +144,9 @@ class AddUserDetails implements Action {
   }
 }
 class SaveSearchList implements Action {
-  run(searchList){
+  run(searchList) {
     // search is OK from here
-    Manager.invokeStatehandler('SearchResult', searchList)
+    Manager.invokeStatehandler('SearchResult', searchList);
   }
 }
 

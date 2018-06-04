@@ -25,13 +25,11 @@ import { StateService } from './services/state.service';
 import { SizePipe } from './size.pipe';
 import { StarredItemsComponent } from './starred-items/starred-items.component';
 import { SuccessComponent } from './success/success.component';
-import { TestComponentComponent } from './test-component/test-component.component';
 import { UploadBoxComponent } from './upload-box/upload-box.component';
 import { UploadService } from './upload-box/upload.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
-  { path: 'test', component: TestComponentComponent },
   { path: 'main', component: MainViewComponent, canActivate: [AuthGuard] },
   { path: 'starred', component: StarredItemsComponent, canActivate: [AuthGuard] },
   { path: 'latestSearch', component: LatestsearchComponent, canActivate: [AuthGuard]},
