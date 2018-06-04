@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyCBjZSjYFT5-6zq1lwqiqKJbx42SXX-9fQ',
+    authDomain: 'win-box-db.firebaseapp.com',
+    databaseURL: 'https://win-box-db.firebaseio.com',
+    projectId: 'win-box-db',
+    storageBucket: 'win-box-db.appspot.com',
+    messagingSenderId: '57130320361'
+  }
 };
 
 /*

@@ -1,6 +1,6 @@
-<a [href]="loginUrl">GO THERE</a>
-<div *ngIf="thanks">
-  <h2>THANK YOU FOR USING OUR SERVICE FRIEND! IF YOU WANT TO USE IT AGAIN
-    YOU WILL HAVE TO RE-AUTHORIZE.
-  </h2>
+<div class="wrapper">
+  <h2 *ngIf="!thanks">This client requires authorization with dropbox to continue.</h2>
+  <h2 *ngIf="thanks">Thank you for using our service. To use it again, you will need to re-authorize.</h2>
+  <div class="btn">
+    <a [href]="loginUrl">AUTHORIZE ME</a></div>
 </div>

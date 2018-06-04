@@ -31,6 +31,7 @@ export class BreadcrumbsComponent implements OnInit {
 
   changePath(val) {
     this.state.runAction(ActionType.ChangeLocation, val);
+    this.state.runAction(ActionType.GetFileListing, val);
   }
 
   goUp() {
@@ -40,7 +41,8 @@ export class BreadcrumbsComponent implements OnInit {
       } else {
         const obj = this.breadcrumbs[this.breadcrumbs.length - 2];
         this.changePath(obj[Object.keys(obj)[0]]);
-        // one level up is 1 before .length-1
+        // last item in an array is at length - 1
+        // one level up is 1 before that: length -2
         // then we use the first key in Object.kes(obj)[0]
         // as a key on obj.
         // so gud.

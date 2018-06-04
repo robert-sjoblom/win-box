@@ -10,6 +10,7 @@ class Manager {
     breadcrumbs: string[];
     searchResult: any[]
     error?: string;
+    cursor?: string;
   };
 
   constructor() {
@@ -24,14 +25,13 @@ class Manager {
 
     if (localStorage.getItem('win-box') !== null) {
       const { userDetails, starredItems } = JSON.parse(localStorage.getItem('win-box'));
-      // validate token here?
       this._state = { ...this._state, userDetails, starredItems };
     }
   }
 
   statehandlers = {
-    'FileList': ([location, res]) => {
-      const newListing = { ...this._state.FileList, [location]: res };
+    'FileList': ([location, filelist]) => {
+      const newListing = { ...this._state.FileList, [location]: filelist };
       this._state = {
         ...this._state, FileList: newListing
       };
@@ -77,6 +77,18 @@ class Manager {
       this.removeStateFromStorage();
       this.constructor(); // resets state.
     },
+    'UpdateFileListing': ([changes]) => {
+      const location = this.state.Location;
+      const filelist = changes.reduce((acc, cur) => {
+        if (['folder', 'file'].includes(cur['.tag'])) { // we should add something
+          acc = [...acc, cur];
+        } else if (cur['.tag'] === 'deleted') { // we should remove something.
+          acc = acc.filter(item => item.path_lower !== cur.path_lower);
+        }
+        return acc;
+      }, this.state.FileList[this.state.Location]);
+      this.invokeStatehandler('FileList', location, filelist); // why duplicate code? We already have a function that does this.
+    },
     'SearchResult': ([searchResult]) => {
       this._state = {
         ...this.state,
@@ -98,7 +110,7 @@ class Manager {
 
   saveStateToStorage() {
     const { userDetails, starredItems } = this._state;
-    const stateToSave = { userDetails, starredItems};
+    const stateToSave = { userDetails, starredItems };
     localStorage.setItem('win-box', JSON.stringify(stateToSave));
   }
 
@@ -107,7 +119,7 @@ class Manager {
   }
 
   setUpdater(updater) {
-    // uppdaterar state för alla subscribers
+    // uppdatestate for all subscribers.
     this.updater = updater;
   }
 }

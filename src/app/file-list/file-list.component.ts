@@ -13,7 +13,9 @@ export class FileListComponent implements OnInit {
   location;
   starredItems;
 
-  constructor(private state: StateService) { }
+  constructor(
+    private state: StateService
+  ) { }
 
   ngOnInit() {
     this.state.getFromState('Location')

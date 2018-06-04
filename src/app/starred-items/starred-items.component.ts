@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 })
 export class StarredItemsComponent implements OnInit {
   starredItems;
-
   constructor(private state: StateService, private route: Router) { }
 
   ngOnInit() {
@@ -28,5 +27,4 @@ export class StarredItemsComponent implements OnInit {
     this.state.runAction(ActionType.GetFileListing, location);
     this.route.navigate(['/main']);
   }
-
 }

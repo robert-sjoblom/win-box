@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { ActionType, StateService } from './services/state.service';
 
 @Component({
@@ -9,16 +10,23 @@ import { ActionType, StateService } from './services/state.service';
 })
 export class AppComponent {
   toggleMenu;
-  constructor(private state: StateService, private router: Router) { }
-  title = 'app';
+  constructor(private state: StateService, private router: Router) {
+    router.events
+    .pipe(
+      filter(event => event instanceof NavigationEnd)
+    )
+      .subscribe((event: NavigationEnd) => {
+        this.toggleMenu = false;
+      });
+  }
+  title = '#win_box';
 
   changeLocation(location) {
     this.state.runAction(ActionType.ChangeLocation, location);
-    // this.state.runAction(ActionType.GetFileListing, this.location);
+    this.toggleMenu = false;
   }
 
   logout() {
-    this.toggleMenu = false;
     this.state.logout();
     this.router.navigate(['login', 'thanks']);
   }

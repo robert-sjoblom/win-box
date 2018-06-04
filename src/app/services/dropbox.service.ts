@@ -18,8 +18,9 @@ export class DropboxService {
   authUrl = this.dropboxClient.getAuthenticationUrl(this.redirect, 'fly, you fools!', 'token');
   apiUrl = 'https://api.dropboxapi.com/2/';
 
-  constructor(private http: HttpClient) {
-  }
+  latestCursor;
+
+  constructor(private http: HttpClient) { }
 
   url() {
     return this.authUrl;
@@ -33,6 +34,15 @@ export class DropboxService {
     const body = {};
     body['path'] = (location === 'root') ? '' : location;
     return this.http.post(`${this.apiUrl}files/list_folder`, body);
+  }
+
+  setLatestCursor(location) {
+    const path = (location === 'root') ? '' : location;
+    const body = JSON.stringify({ path, recursive: false, include_deleted: true });
+    this.http.post(`${this.apiUrl}files/list_folder/get_latest_cursor`, body)
+      .subscribe((res: any) => {
+        this.latestCursor = res.cursor;
+      });
   }
 
   download(file): any {
@@ -58,10 +68,7 @@ export class DropboxService {
         writeState('onload', 'success');
       } else {
         const errorMsg = xhr.response || 'Unable to upload file.';
-        console.log('got an error here boi', );
-        console.log(errorMsg);
-        writeState('onload', 'failure', errorMsg);
-        // something went wrong.
+        writeState('onload', 'failure', { file, errorMsg });
       }
     };
 
@@ -101,5 +108,13 @@ export class DropboxService {
       path: file,
     };
     return this.dropboxClient.filesGetThumbnail(data);
+  }
+
+  updateFileListing() {
+    const cursor = this.latestCursor;
+    return this.http.post(`${this.apiUrl}files/list_folder/continue`, { cursor })
+      .pipe(map((res: any) => {
+        return res.entries;
+      }));
   }
 }

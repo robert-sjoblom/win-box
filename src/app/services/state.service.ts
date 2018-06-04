@@ -33,6 +33,8 @@ export class StateService {
         return new RemoveStar().run(args);
       case ActionType.AddUserDetails:
         return new AddUserDetails().run(args);
+      case ActionType.UpdateFileListing:
+        return new UpdateFileListing(this.dropbox).run(args);
       case ActionType.SaveSearch:
         return new SaveSearchList().run(args);
     }
@@ -73,6 +75,8 @@ export enum ActionType {
   AddStar,
   RemoveStar,
   AddUserDetails,
+  UpdateFileListing,
+  GetLatestCursor
   SaveSearch
 }
 
@@ -84,6 +88,8 @@ class GetFileListing implements Action {
     return this.dropbox.getFileList(location)
       .pipe(
         map((res: any) => {
+          // Manager.invokeStatehandler('Cursor', res.cursor);
+          this.dropbox.setLatestCursor(location);
           return res.entries;
         }),
         catchError(err => Observable.throw(err))
@@ -149,5 +155,18 @@ class Logout implements Action {
   run() {
     this.dropbox.revokeToken();
     Manager.invokeStatehandler('Logout');
+  }
+}
+
+class UpdateFileListing implements Action {
+  constructor(private dropbox: DropboxService) { }
+  run(callbackFunc) {
+    // callbackFunc lets our notification service know we want to
+    // receive updates again.
+    this.dropbox.updateFileListing()
+      .subscribe(changes => {
+        this.dropbox.setLatestCursor(Manager.state.Location);
+        Manager.invokeStatehandler('UpdateFileListing', changes);
+      }, null, () => callbackFunc());
   }
 }
