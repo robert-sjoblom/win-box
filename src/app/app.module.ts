@@ -11,10 +11,12 @@ import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { FileListComponent } from './file-list/file-list.component';
 import { FileComponent } from './file/file.component';
+import { LatestsearchComponent } from './latestsearch/latestsearch.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { MainViewComponent } from './main-view/main-view.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { SearchComponent } from './search/search.component';
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { DropboxService } from './services/dropbox.service';
@@ -26,15 +28,13 @@ import { SuccessComponent } from './success/success.component';
 import { TestComponentComponent } from './test-component/test-component.component';
 import { UploadBoxComponent } from './upload-box/upload-box.component';
 import { UploadService } from './upload-box/upload.service';
-import { SearchComponent } from './search/search.component';
-import { LatestsearchComponent } from './latestsearch/latestsearch.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
   { path: 'test', component: TestComponentComponent },
   { path: 'main', component: MainViewComponent, canActivate: [AuthGuard] },
   { path: 'starred', component: StarredItemsComponent, canActivate: [AuthGuard] },
-  { path: "latestSearch", component: LatestsearchComponent, canActivate: [AuthGuard]},  
+  { path: 'latestSearch', component: LatestsearchComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent },
   { path: 'login/:thanks', component: LoginComponent },
   { path: 'success', component: SuccessComponent },
@@ -51,7 +51,6 @@ const appRoutes: Routes = [
     FileListComponent,
     FileComponent,
     SizePipe,
-    TestComponentComponent,
     StarredItemsComponent,
     LogoutComponent,
     UploadBoxComponent,
