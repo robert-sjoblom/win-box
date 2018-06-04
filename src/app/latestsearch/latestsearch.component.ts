@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService, ActionType } from '../services/state.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'latestsearch',
@@ -11,7 +12,7 @@ export class LatestsearchComponent implements OnInit {
   searchItems = [];
   location;
 
-  constructor(private state: StateService) { }
+  constructor(private state: StateService, private route: Router) { }
 
   ngOnInit() {
     
@@ -25,5 +26,6 @@ export class LatestsearchComponent implements OnInit {
   changeLocation(location) {
     this.state.runAction(ActionType.ChangeLocation, location);
     this.state.runAction(ActionType.GetFileListing, location);
+    this.route.navigate(['/main']);
   }
 }

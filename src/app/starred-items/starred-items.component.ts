@@ -24,10 +24,9 @@ export class StarredItemsComponent implements OnInit {
   }
 
   changeLocation(location) {
-    console.log(location)
     this.state.runAction(ActionType.ChangeLocation, location);
     this.state.runAction(ActionType.GetFileListing, location);
-    this.route.navigate(['/main'])
+    this.route.navigate(['/main']);
   }
 
 }
