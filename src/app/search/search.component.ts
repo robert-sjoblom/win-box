@@ -3,6 +3,7 @@ import { DropboxService } from '../services/dropbox.service';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators'; 
 import { StateService, ActionType } from '../services/state.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'search',
@@ -17,7 +18,7 @@ export class SearchComponent implements OnInit {
   stream = new Subject<string>(); 
   
 
-  constructor(private dropbox: DropboxService, private state: StateService) { }
+  constructor(private dropbox: DropboxService, private state: StateService, private route: Router) { }
 
   ngOnInit() {
     this.stream
@@ -52,6 +53,7 @@ export class SearchComponent implements OnInit {
   changeLocation(location) {
     this.state.runAction(ActionType.ChangeLocation, location);
     this.state.runAction(ActionType.GetFileListing, location);
+    this.route.navigate(['/main']);
   }
   setTime(){
     setTimeout(()=> this.results = [], 200);
