@@ -26,20 +26,15 @@ import { SuccessComponent } from './success/success.component';
 import { TestComponentComponent } from './test-component/test-component.component';
 import { UploadBoxComponent } from './upload-box/upload-box.component';
 import { UploadService } from './upload-box/upload.service';
-
-
-
-
-
-
-
-
+import { SearchComponent } from './search/search.component';
+import { LatestsearchComponent } from './latestsearch/latestsearch.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
   { path: 'test', component: TestComponentComponent },
   { path: 'main', component: MainViewComponent, canActivate: [AuthGuard] },
   { path: 'starred', component: StarredItemsComponent, canActivate: [AuthGuard] },
+  { path: "latestSearch", component: LatestsearchComponent, canActivate: [AuthGuard]},  
   { path: 'login', component: LoginComponent },
   { path: 'login/:thanks', component: LoginComponent },
   { path: 'success', component: SuccessComponent },
@@ -60,7 +55,9 @@ const appRoutes: Routes = [
     StarredItemsComponent,
     LogoutComponent,
     UploadBoxComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    SearchComponent,
+    LatestsearchComponent
   ],
   imports: [
     BrowserModule,

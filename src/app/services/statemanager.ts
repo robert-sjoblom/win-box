@@ -8,6 +8,7 @@ class Manager {
     userDetails: IUserDetails;
     starredItems: any[];
     breadcrumbs: string[];
+    searchResult: any[]
     error?: string;
     cursor?: string;
   };
@@ -19,6 +20,7 @@ class Manager {
       userDetails: {},
       starredItems: [],
       breadcrumbs: [],
+      searchResult: []
     };
 
     if (localStorage.getItem('win-box') !== null) {
@@ -36,7 +38,7 @@ class Manager {
     },
     'Location': ([location]) => {
       let breadcrumbs;
-      if (location === 'root') {
+      if (location === 'root' || location === 'starred' || location === 'latestSearch') {
         breadcrumbs = [];
       } else if (this.state.breadcrumbs.includes(location)) {
         breadcrumbs = this.state.breadcrumbs.slice(0, this.state.breadcrumbs.indexOf(location) + 1);
@@ -87,6 +89,12 @@ class Manager {
       }, this.state.FileList[this.state.Location]);
       this.invokeStatehandler('FileList', location, filelist); // why duplicate code? We already have a function that does this.
     },
+    'SearchResult': ([searchResult]) => {
+      this._state = {
+        ...this.state,
+        searchResult
+      }
+    }
   };
 
   invokeStatehandler(key, ...args) {

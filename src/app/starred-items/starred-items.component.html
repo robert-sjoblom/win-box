@@ -14,6 +14,7 @@
     *ngFor="let star of starredItems"
     [file]="star"
     (fileObject)="changeStar($event)"
+    (pathObject)="changeLocation($event)"
   ></file>
 
 </div>

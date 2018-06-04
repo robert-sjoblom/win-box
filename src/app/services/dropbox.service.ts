@@ -2,8 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Dropbox } from 'dropbox/src';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { of } from 'rxjs'
+import { map, delay } from 'rxjs/operators'
 import Manager from './statemanager';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -80,6 +83,22 @@ export class DropboxService {
     }));
 
     xhr.send(file);
+  }
+  search(query): Observable<string[]> {
+    if(!query){
+      return of([])
+    }
+
+    return this.http.post(`${this.apiUrl}/files/search`, {
+      "path": "",
+      "query": query,
+      "max_results": 10,
+    })
+    .pipe(
+      map((response: any) => {
+        return response.matches.map(item => item.metadata);
+      })
+    )
   }
 
   thumbnail(file) {
