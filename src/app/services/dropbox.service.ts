@@ -14,7 +14,7 @@ export class DropboxService {
   redirect = 'https://win-box-db.firebaseapp.com/success';
   dropboxClient = new Dropbox({ clientId: this.appKey });
 
-  authUrl = this.dropboxClient.getAuthenticationUrl(this.redirect, 'why is it not working mon', 'token');
+  authUrl = this.dropboxClient.getAuthenticationUrl(this.redirect, 'fireboxdeploycansucc', 'token');
   apiUrl = 'https://api.dropboxapi.com/2/';
 
   latestCursor;
