@@ -10,7 +10,8 @@
   <file
   *ngFor="let search of searchItems"
   [file]="search"
-  (fileObject)="changeStar($event)"
+  
+  (pathObject)="changeLocation($event)"
 ></file>
 
 </div>

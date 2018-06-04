@@ -37,7 +37,6 @@ export class SearchComponent implements OnInit {
             }
           });
           this.results = obj
-          console.log(obj, "from sub searchcomponent");
           return obj;
         } else {
           this.results = [];
@@ -57,7 +56,7 @@ export class SearchComponent implements OnInit {
   setTime(){
     setTimeout(()=> this.results = [], 200);
   }
-  onChangeSearch(value){
-    this.stream.next(value)
+  onChangeSearch(query){
+    this.stream.next(query)
   }
 }
