@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StateService } from '../services/state.service';
+import { StateService, ActionType } from '../services/state.service';
 
 @Component({
   selector: 'latestsearch',
@@ -9,14 +9,21 @@ import { StateService } from '../services/state.service';
 export class LatestsearchComponent implements OnInit {
 
   searchItems = [];
+  location;
 
   constructor(private state: StateService) { }
 
   ngOnInit() {
+    
+
     this.state.getFromState('searchResult')
       .subscribe(latestSearch => {
         this.searchItems = latestSearch;
-        console.log(this.searchItems, "this is from latestSearch!");
       })
+  }
+  
+  changeLocation(location) {
+    this.state.runAction(ActionType.ChangeLocation, location);
+    this.state.runAction(ActionType.GetFileListing, location);
   }
 }

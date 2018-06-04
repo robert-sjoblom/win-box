@@ -38,7 +38,7 @@ class Manager {
     },
     'Location': ([location]) => {
       let breadcrumbs;
-      if (location === 'root') {
+      if (location === 'root' || location === 'starred' || location === 'latestSearch') {
         breadcrumbs = [];
       } else if (this.state.breadcrumbs.includes(location)) {
         breadcrumbs = this.state.breadcrumbs.slice(0, this.state.breadcrumbs.indexOf(location) + 1);
