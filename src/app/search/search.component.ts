@@ -4,11 +4,30 @@ import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { DropboxService } from '../services/dropbox.service';
 import { ActionType, StateService } from '../services/state.service';
+import { 
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 
 @Component({
   selector: 'search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+  styleUrls: ['./search.component.css'],
+  animations: [
+    trigger('fade', [
+      state('visible', style({ opacity: 1})),
+      transition(':enter', [
+        style({opacity: 0}),
+        animate('500ms ease-in')
+      ]),
+      transition(':leave', [ // transition from 'visible' state to unmounted
+        animate('500ms ease-out', style({ opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class SearchComponent implements OnInit {
 

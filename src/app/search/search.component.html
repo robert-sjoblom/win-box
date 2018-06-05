@@ -9,7 +9,7 @@
       /><span> </span>
   </div>
 </div>
-<div *ngIf="results.length > 0" id="search-wrapper">
+<div [@fade]="'visible'" *ngIf="results.length > 0" id="search-wrapper">
   <file
     *ngFor="let result of results"
     [file]="result"
