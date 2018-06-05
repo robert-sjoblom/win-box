@@ -1,6 +1,7 @@
 <div
   class="file-wrapper"
   [class.search]="file.search"
+  [@fade]="'visible'"
 >
   <div id="icon">
     <div *ngIf="file['.tag'] == 'folder'">
@@ -40,6 +41,7 @@
         (click)="downloadFile(file)"
         >
         <i 
+        *ngIf="file['.tag'] == 'file'"
         class="fas fa-download"
         ></i></a>
   </div>
