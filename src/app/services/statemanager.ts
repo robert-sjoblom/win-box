@@ -98,7 +98,6 @@ class Manager {
   };
 
   invokeStatehandler(key, ...args) {
-    // check if property exists
     this.statehandlers[key](args);
     this.updater();
     this.saveStateToStorage();
@@ -119,7 +118,7 @@ class Manager {
   }
 
   setUpdater(updater) {
-    // uppdatestate for all subscribers.
+    // update state for all subscribers.
     this.updater = updater;
   }
 }

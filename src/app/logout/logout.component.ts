@@ -15,5 +15,4 @@ export class LogoutComponent {
     this.state.logout();
     this.route.navigate(['login', 'thanks']);
   }
-
 }

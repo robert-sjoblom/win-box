@@ -53,7 +53,7 @@ export class DropboxService {
   upload(file, writeState, updateSubscribers) {
     // Angular uses multipart/form-data; DROPBOX DOES NOT LIKE THAT.
     // We can use XMLHttpRequests directly, instead.
-    const xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest(); // this is what angular builds its http service from.
     const prefix = (Manager.state.Location === 'root' ? '' : Manager.state.Location);
     const path = `${prefix}/${file.name}`;
 
