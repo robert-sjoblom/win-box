@@ -47,7 +47,7 @@ export class DropboxService {
   download(file): any {
     const token = Manager.state.userDetails.access_token;
     this.dropboxClient.setAccessToken(token);
-    return this.dropboxClient.filesGetTemporaryLink({ path: file.path_lower })    
+    return this.dropboxClient.filesGetTemporaryLink({ path: file.path_lower });
   }
 
   upload(file, writeState, updateSubscribers) {
