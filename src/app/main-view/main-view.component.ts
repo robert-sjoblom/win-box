@@ -8,6 +8,5 @@ import { NotificationService } from '../services/notification.service';
   styleUrls: ['./main-view.component.css']
 })
 export class MainViewComponent {
-
   constructor(private authGuard: AuthGuardService, private notification: NotificationService) { }
 }
