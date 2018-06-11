@@ -16,6 +16,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.includes('dropbox')) {
+      // adds headers to all requests to dropbox
       req = req.clone({
         setHeaders: {
           'Content-Type': 'application/json; charset=utf-8',
@@ -24,6 +25,7 @@ export class AuthInterceptorService implements HttpInterceptor {
         }
       });
     }
+    // sends request to next handler (out to dropbox in this case)
     return next.handle(req);
   }
 }
