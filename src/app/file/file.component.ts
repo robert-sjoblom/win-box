@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DropboxService } from '../services/dropbox.service';
 import { StateService } from '../services/state.service';
@@ -12,9 +12,9 @@ import { StateService } from '../services/state.service';
   // implementation av ng animations
   animations: [
     trigger('fade', [
-      state('visible', style({ opacity: 1})),
+      state('visible', style({ opacity: 1 })),
       transition(':enter', [
-        style({opacity: 0}),
+        style({ opacity: 0 }),
         animate('500ms ease-in')
       ]),
       transition(':leave', [
@@ -23,7 +23,7 @@ import { StateService } from '../services/state.service';
     ])
   ]
 })
-export class FileComponent implements OnInit, OnDestroy{
+export class FileComponent implements OnInit, OnDestroy {
 
   @Input() file;
 
@@ -37,11 +37,11 @@ export class FileComponent implements OnInit, OnDestroy{
   constructor(private route: ActivatedRoute, private state: StateService, private dropbox: DropboxService) { }
 
   ngOnInit() {
-    // här subbar vi på starred items. 
+    // här subbar vi på starred items.
     this.state.getFromState('starredItems')
       .subscribe(starred => this.starredItems = starred);
 
-    //Detta är för att kolla om vi har en tag när komponenten laddas. 
+    // Detta är för att kolla om vi har en tag när komponenten laddas.
     this.starTest(this.file);
 
     if (this.file.name.endsWith('jpg') || this.file.name.endsWith('pdf') || this.file.name.endsWith('jpeg')) {
@@ -49,10 +49,10 @@ export class FileComponent implements OnInit, OnDestroy{
     }
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.starredItems.unsubscribe();
   }
-  
+
   starTest(file) {
     // Kollar ifall file finns i starred items.
     if (this.starredItems.some(star => star.id === file.id)) {
@@ -70,8 +70,7 @@ export class FileComponent implements OnInit, OnDestroy{
   }
   thumbnail(path) {
 
-    //thumbnail where we take the response and create a thumbnail if success
-    
+    // thumbnail where we take the response and create a thumbnail if success
     this.dropbox.thumbnail(path)
       .then((res: any) => {
         const url = URL.createObjectURL(res.fileBlob);
@@ -88,7 +87,7 @@ export class FileComponent implements OnInit, OnDestroy{
 
   downloadFile(file) {
     this.dropbox.download(file)
-    //Download file where we take the response and create and temporary link and simulating a click
+      // Download file where we take the response and create and temporary link and simulating a click
       .then(resp => {
         const a = document.createElement('a');
         const div = document.createElement('div');
@@ -106,7 +105,7 @@ export class FileComponent implements OnInit, OnDestroy{
       })
       .catch(err => {
         console.log(err);
-        //If we get an error 409 we removed the file from starred items. 
+        // If we get an error 409 we removed the file from starred items.
         if (err.status === 409) {
           this.changeStar(file);
         }
