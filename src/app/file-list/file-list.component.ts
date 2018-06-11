@@ -42,6 +42,7 @@ export class FileListComponent implements OnInit {
     this.state.runAction(ActionType.GetFileListing, location);
   }
   changeStar(file) {
+    //Checks if the starred item already exists. We run action depending what state.
     if (this.starredItems.some(starred => starred.id === file.id)) {
       this.state.runAction(ActionType.RemoveStar, file);
     } else {
