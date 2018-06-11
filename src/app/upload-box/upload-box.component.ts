@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StateService } from '../services/state.service';
 import { UploadService } from './upload.service';
 
@@ -7,10 +7,9 @@ import { UploadService } from './upload.service';
   templateUrl: './upload-box.component.html',
   styleUrls: ['./upload-box.component.css']
 })
-export class UploadBoxComponent implements OnInit {
+export class UploadBoxComponent implements OnInit, OnDestroy {
   uploadingState;
   fileToUpload: File;
-  // this is a bad way to solve it :/
   path;
   display;
   constructor(private upload: UploadService, private state: StateService) { }
@@ -35,10 +34,16 @@ export class UploadBoxComponent implements OnInit {
   handleChange(files) {
     const formData: FormData = new FormData();
     this.fileToUpload = files.item(0);
-    if ((this.fileToUpload.size / 1024 ** 2) < 150) {
+    if ((this.fileToUpload.size / 1024 ** 2) < 150) { // make sure it's less than 150mb size
       this.upload.upload(this.fileToUpload);
     } else {
       alert('Too big, too big!');
     }
   }
+
+  ngOnDestroy() {
+    this.uploadingState.unsubscribe();
+    this.path.unsubscribe();
+  }
+
 }
