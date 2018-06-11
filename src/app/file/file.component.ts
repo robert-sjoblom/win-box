@@ -1,14 +1,8 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DropboxService } from '../services/dropbox.service';
 import { StateService } from '../services/state.service';
-import { 
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
 
 
 @Component({
@@ -86,23 +80,23 @@ export class FileComponent implements OnInit {
       .then(resp => {
         const a = document.createElement('a');
         const div = document.createElement('div');
-        div.className = "notification show"
+        div.className = 'notification show';
         div.innerText = 'Your file has been downloaded';
-        document.body.appendChild(div)
+        document.body.appendChild(div);
         a.setAttribute('href', resp.link);
         a.style.display = 'none';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         setTimeout(() => {
-          document.body.removeChild(div) 
+          document.body.removeChild(div);
         }, 2000);
       })
       .catch(err => {
-        console.log(err)
-        if (err.status === 409){
-          this.changeStar(file)
+        console.log(err);
+        if (err.status === 409) {
+          this.changeStar(file);
         }
       });
-  } 
+  }
 }
