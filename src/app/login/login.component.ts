@@ -14,7 +14,6 @@ export class LoginComponent implements OnInit {
   loginUrl;
   thanks;
   constructor(private dropbox: DropboxService, private route: ActivatedRoute) { }
-  // private router: Router
   ngOnInit() {
     this.loginUrl = this.dropbox.url();
     this.route.paramMap

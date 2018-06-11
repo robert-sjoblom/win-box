@@ -16,6 +16,9 @@ export class BreadcrumbsComponent implements OnInit {
       .subscribe(crumbs => {
         let crumbsToMapOver;
         if (crumbs.error) {
+          // If we're getting an object rather than an array
+          // we filter out the error and use the remaining
+          // key(s) to build our breadcrumbs from.
           crumbsToMapOver = Object.keys(crumbs)
             .filter(key => key !== 'error')
             .map(key => crumbs[key]);
@@ -43,7 +46,7 @@ export class BreadcrumbsComponent implements OnInit {
         this.changePath(obj[Object.keys(obj)[0]]);
         // last item in an array is at length - 1
         // one level up is 1 before that: length -2
-        // then we use the first key in Object.kes(obj)[0]
+        // then we use the first key in Object.keys(obj)[0]
         // as a key on obj.
         // so gud.
       }

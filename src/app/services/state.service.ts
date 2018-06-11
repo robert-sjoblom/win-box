@@ -59,7 +59,6 @@ export class StateService {
   }
 
   updateSubscribersWithError = (err) => {
-    // this.updateSubscribers();
     this.subject.next({...Manager.state, error : err});
   }
 
@@ -80,8 +79,6 @@ export enum ActionType {
   SaveSearch
 }
 
-// can we move this elsewhere somehow, without fucking up everything?
-// No.
 class GetFileListing implements Action {
   constructor(private dropbox: DropboxService, private updateWithError) { }
   run(location) {
@@ -112,7 +109,6 @@ class GetFileListing implements Action {
       case 409:
         message = `The resource you requested couldn't be found at this location. (Status code ${status})`;
         break;
-      // remove stars here, when everything is fixed.
       default:
         message = 'Fuck if I know, boi!';
     }
