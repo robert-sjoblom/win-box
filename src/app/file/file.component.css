@@ -74,7 +74,9 @@
     width: 100%;
     text-align: right;
 }
-
+.notification{
+    background-color: red;
+}
 .fa-download{
     padding-top: 15px;
     font-size: 25px;

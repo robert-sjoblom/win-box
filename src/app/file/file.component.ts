@@ -2,12 +2,31 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DropboxService } from '../services/dropbox.service';
 import { StateService } from '../services/state.service';
+import { 
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 
 
 @Component({
   selector: 'file',
   templateUrl: './file.component.html',
-  styleUrls: ['./file.component.css']
+  styleUrls: ['./file.component.css'],
+  animations: [
+    trigger('fade', [
+      state('visible', style({ opacity: 1})),
+      transition(':enter', [
+        style({opacity: 0}),
+        animate('500ms ease-in')
+      ]),
+      transition(':leave', [
+        animate('500ms ease-out', style({ opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class FileComponent implements OnInit {
 
@@ -66,12 +85,24 @@ export class FileComponent implements OnInit {
     this.dropbox.download(file)
       .then(resp => {
         const a = document.createElement('a');
+        const div = document.createElement('div');
+        div.className = "notification show"
+        div.innerText = 'Your file has been downloaded';
+        document.body.appendChild(div)
         a.setAttribute('href', resp.link);
         a.style.display = 'none';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+        setTimeout(() => {
+          document.body.removeChild(div) 
+        }, 2000);
       })
-      .catch(err => console.log(err));
-  }
+      .catch(err => {
+        console.log(err)
+        if (err.status === 409){
+          this.changeStar(file)
+        }
+      });
+  } 
 }

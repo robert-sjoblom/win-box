@@ -4,3 +4,23 @@
     margin: 0 auto;
     padding: 0;
 }
+
+.notification{
+    position: absolute;    
+    z-index: 99;
+    top: 80%;
+    left: 40%;
+    background-color: #333;
+    border-top: 5px solid blacK;
+    color: whitesmoke;
+    padding: 40px 70px;
+    opacity: 0;
+    transition: 1s;
+}
+.show{
+    transition: 1s;
+    opacity: 1;
+}
+.leave{
+    opacity: 0;
+}
