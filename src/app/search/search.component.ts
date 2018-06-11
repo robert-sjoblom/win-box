@@ -72,6 +72,7 @@ export class SearchComponent implements OnInit {
     setTimeout(() => this.results = [], 200);
   }
   onChangeSearch(query) {
+    //Sends the query into stream
     this.stream.next(query);
   }
 }

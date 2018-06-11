@@ -12,7 +12,7 @@ export class AuthGuardService implements CanActivate {
     this.state.getFromState('userDetails')
       .subscribe(userDetails => this.userDetails = userDetails);
   }
-
+  //checks if we have a token or not. Returns true or false to Router on CanActivate
   canActivate(): boolean {
     if (!this.userDetails.access_token) {
       this.route.navigate(['/login']);
