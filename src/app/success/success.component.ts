@@ -32,6 +32,7 @@ export class SuccessComponent implements OnInit {
     const userDetails: any = url.split('#')
       .reduce((acc, cur, i) => { // we want an object with key: value from the string
         if (!i) {
+          // the first item will be app address, we don't care about that
           return acc;
         }
         return acc = {

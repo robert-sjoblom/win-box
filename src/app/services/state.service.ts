@@ -85,7 +85,6 @@ class GetFileListing implements Action {
     return this.dropbox.getFileList(location)
       .pipe(
         map((res: any) => {
-          // Manager.invokeStatehandler('Cursor', res.cursor);
           this.dropbox.setLatestCursor(location);
           return res.entries;
         }),
@@ -141,7 +140,6 @@ class AddUserDetails implements Action {
 }
 class SaveSearchList implements Action {
   run(searchList) {
-    // search is OK from here
     Manager.invokeStatehandler('SearchResult', searchList);
   }
 }

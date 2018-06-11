@@ -74,6 +74,7 @@ export class DropboxService {
     xhr.open('POST', 'https://content.dropboxapi.com/2/files/upload');
     xhr.setRequestHeader('Authorization', 'Bearer ' + Manager.state.userDetails.access_token);
     xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+    // octet-stream means "this is just for saving to disk"
     xhr.setRequestHeader('Dropbox-API-Arg', JSON.stringify({
       path: path,
       mode: 'add',

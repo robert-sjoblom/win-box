@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActionType, StateService } from '../services/state.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { ActionType, StateService } from '../services/state.service';
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.css']
 })
-export class BreadcrumbsComponent implements OnInit {
+export class BreadcrumbsComponent implements OnInit, OnDestroy {
   breadcrumbs;
   objectKeys = Object.keys;
   constructor(private state: StateService) { }
@@ -51,5 +51,9 @@ export class BreadcrumbsComponent implements OnInit {
         // so gud.
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.breadcrumbs.unsubscribe();
   }
 }
